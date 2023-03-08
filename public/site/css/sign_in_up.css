@@ -1,0 +1,99 @@
+small{
+    display: block;
+    width: 300px;
+    padding: 5px 10px;
+    margin: auto;
+    text-align: center;
+    background-color: brown;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 12px;
+}
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+
+.container{
+    width: 40%;
+    margin: 50px auto 50px;
+    border-radius: 10px;
+    border: 3px solid #aba3a3;
+}
+
+.form-header{
+    background-color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+    margin: 40px 10px;
+}
+
+
+input[type='text'] , input[type='password'] , input[type='email'],input[type='phone'],input[type='file']{
+    border: 2px solid #bfbfbf;
+    display: block;
+    width: 70%;
+    padding: 7px 12px 7px 12px;
+    margin: 0 auto 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: box-shadow 0.5s;
+}
+input[type='text']:focus,input[type='password']:focus,input[type='email']:focus,input[type='file']{
+    box-shadow: 1px 1px 10px  rgb(197, 197, 197), -1px -1px 10px rgb(197, 197, 197);
+    outline: none;
+}
+.container .form .user{
+    top: 3%;
+    left: 11.3%;
+    border: 2px groove #bfbfbf;
+}
+.container .form .password{
+    top: 37%;
+    left: 11.3%;
+    border: 2px groove #af9999;
+}
+
+
+.container .form button{
+    width: 60%;
+    font-size: 17px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 9px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    border: 2px solid #a7a7a7;
+    transition: color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    color: rgb(94, 91, 91);
+    text-transform: capitalize;
+}
+.container .form button:hover,.container-signUp .form-signUp button:hover{
+    box-shadow: 5px 5px 10px white, -5px -5px 10px white;
+    color:black
+}
+.container a{
+    display: block;
+    font-size: 20px;
+    text-decoration: none;
+    width: 60%;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    margin: 40px auto 50px;
+    padding: 5px 0;
+    color: rgb(182, 182, 182);
+    transition: box-shadow 0.5s , color 0.5s , border 0.5s;
+    border: 2px solid rgb(182, 182, 182);
+}
+.container a:hover{
+    color:rgb(105, 105, 105);
+    box-shadow: 5px 5px 10px white, -5px -5px 10px white;
+}

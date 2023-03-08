@@ -1,0 +1,279 @@
+/*start banner*/
+.banner{
+    height:60px;
+    background-color: rgba(255, 145, 10, 0.904);
+}
+.banner .logo-link{
+    display: block;
+    width:86%;
+    height:100%;
+    margin: auto;
+}
+.banner .logo-link img{
+    width:100%;
+    height:100%;
+}
+/*end banner*/
+/*start language content*/
+.language-details{
+    height:30px;
+}
+.language-details .container{
+    width:85%;
+    margin:auto;
+    height:100%;
+    display:flex;
+    flex-direction: row;
+}
+.language-details .sell-jumia-container,.language-details .language{
+    width:50%;
+}
+.language-details .sell-jumia-container .sell-jumia{
+    display: inline-block;
+    width: 30%;
+    padding: 5px;
+    color: #201d1dc7;
+}
+.language-details .sell-jumia-container .sell-jumia:hover{
+    color: #e10f0f;
+}
+.language-details .language{
+    text-align: right;
+}
+.language-details .language .english{
+    display: inline-block;
+    max-width:15%;
+    padding:5px 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    color: black;
+}
+.language-details .language .english:hover,.language-details .language .arabic:hover{
+    background-color: #f17e26;
+    color: white;
+}
+.language-details .language .arabic{
+    display: inline-block;
+    max-width:15%;
+    padding:5px 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    color: black;
+}
+.language-details .language>span{
+    font-size: 20px;
+    font-weight: bolder;
+    color: coral
+}
+
+/*end language content*/
+.header-container{
+    background-color: white;
+    position:sticky;
+    top:0;
+    z-index: 10;
+}
+.header-container .website-header{
+    width:89%;
+    margin:auto;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+.website-header .logo{
+    width: 15%;
+    height: 76px;
+    padding: 0 10px
+}
+.website-header .logo a{
+    display: inline-block;
+    width:100%;
+    height: 100%;
+}
+.website-header .logo a img{
+    width:100%;
+    height:100%;
+}
+.website-header .search{
+    width: 55%;
+    padding-top: 14px;
+    padding-left: 55px;
+}
+.website-header .search .search-input-icon{
+    background-image: url(../images/icons/search-icon.webp);
+    background-size: 25px 25px;
+    background-position: -5px 11px;
+    background-repeat: no-repeat;
+    padding: 20px;
+    width: 80%;
+    height: 40px;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+}
+.website-header .search .search-button{
+    width: 17%;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    background-color: rgba(255, 145, 10, 0.904);
+    text-transform: uppercase;
+    color:white;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+.website-header .search .search-button:hover{
+    background-color: rgb(247, 142, 14);
+}
+/* start navbar*/
+.website-header .links{
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    padding: 12px 0 12px 0;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+.website-header .links .help,.website-header .links .acount,.website-header .links .cart{
+    padding:10px 5px;
+    text-align: center;
+}
+.website-header .links .help:active,.website-header .links .acount:active,.website-header .links .cart:active{
+    background-color: rgb(231, 231, 231);
+}
+.website-header .links .acount,.website-header .links .help{
+    width:35%;
+    transition: color 0.2s;
+}
+.acount:hover .arrow,.help:hover .arrow{
+    transform:  rotate(224deg);
+}
+.acount:hover{
+    background-color: rgb(216, 216, 216);
+    border-radius: 10px;
+}
+.acount:hover .dropdown{
+    display:block;
+}
+.acount .dropdown{
+    width:190px;
+    height:176px;
+    background-color: white;
+    position:absolute;
+    top:64px;
+    right:183px;
+    display:none;
+    border-radius: 10px;
+}
+.acount .dropdown .sign-in{
+    height:32%;
+    padding-top:10px;
+}
+.acount .dropdown .sign-in a{
+    width: 81%;
+    background-color: #ff882a;
+    display: inline-block;
+    margin: auto;
+    padding: 5px;
+    border-radius: 5px;
+    font-size:17px;
+    color:black;
+}
+.acount .dropdown .sign-in a:hover{
+    background-color:#f17e26 ;
+    color:white;
+}
+.acount .dropdown .my-acount,.acount .dropdown .orders,.acount .dropdown .saved-items{
+    text-align: left;
+}
+.acount .dropdown .my-acount a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 17px;
+    color:rgba(0,0,0,0.5);
+}
+.acount .dropdown .orders a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 17px;
+    color:rgba(0,0,0,0.5);;
+}
+.acount .dropdown .saved-items a{
+    padding: 10px;
+    display: inline-block;
+    font-size: 17px;
+    width: 100%;
+    height: 100%;
+    color:rgba(0,0,0,0.5);;
+}
+.acount .dropdown .my-acount a:hover,.acount .dropdown .orders a:hover,.acount .dropdown .saved-items a:hover{
+    background-color: rgb(219, 219, 219);
+    color: black;
+}
+
+.help:hover .dropdown{
+    display:block;
+}
+.help .dropdown{
+    width:190px;
+    height:176px;
+    background-color: white;
+    position:absolute;
+    top:64px;
+    right:63px;
+    display:none;
+    border-radius: 12px;
+    padding:10px;
+}
+.help .dropdown .common{
+    display: inline-block;
+    width:100%;
+    max-height: 25%;
+    font-size:15px;
+    text-align: left;
+}
+.help .dropdown .common a{
+    display: inline-block;;
+    width:100%;
+    height:100%;
+    padding:10px;
+    color:rgba(0,0,0,0.7);
+}
+.help .dropdown .common a:hover{
+    background-color: rgb(212, 212, 212);
+    color:black;
+    font-size: 16px;
+}
+.cart{
+    width:30%;
+    color:#000000d7;
+}
+.acount:hover,.help:hover,.cart:hover{
+    color: rgb(247, 142, 14);
+    cursor: pointer;
+}
+.cart .cart-notification{
+    background-color: rgb(239, 91, 11,0.8);
+    color: aliceblue;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    font-size: 14px;
+    border-radius: 50%;
+    transform: translate(-13px, -15px);
+}
+/*end navbar*/
+/*end header*/
+/*end main-header*/
+/*start main */
+.main-content{
+    width:87%;
+    margin:auto;
+}

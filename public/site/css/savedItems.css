@@ -1,0 +1,130 @@
+.message{
+    width: 400px;
+    background-color: rgb(219, 136, 136);
+}
+.header{
+    width: 200px;
+    background-color: rgb(197 96 96);
+}
+.header,.message{
+    margin: 30px auto;
+    padding: 5px 10px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 20px;
+    color: ghostwhite;
+    text-transform: capitalize;
+}
+.content{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-height: 300px;
+    margin-bottom:30px ;
+    background-color:white;
+    text-transform: capitalize;
+    padding:10px;
+}
+.content .image{
+    width:50%;
+    min-height: 300px;
+}
+.content img{
+    display: block;
+    width:50%;
+    height:70%;
+    margin-bottom: 10px;
+    padding:15px;
+    border:2px groove ;
+    border-radius: 5px;
+}
+.content .details{
+    font-size: 13px;
+    width: 50%;
+    padding: 6px 10px
+}
+
+.content .description{
+    width:50%;
+    padding: 20px 50px 10px;
+}
+.content .description .price .new-price,.content .description .price .old-price,
+.content .description .discount{
+    padding: 5px;
+    margin: 10px 0;
+    outline: 2px groove greenyellow;
+    background-color: aliceblue;
+    border: 2px groove greenyellow;
+    text-align: center;
+}
+
+.content .description .delete{
+    width: 50%;
+    padding: 10px;
+    font-size: 18px;
+    margin: 40px auto 20px;
+    background-color: #f9812c;
+    border-radius: 10px;
+    transition: 0.2s transform , 0.2s backgrount-color;
+}
+.delete:hover{
+    background-color: #aa4400;
+    transform: scale(0.9,0.9);
+}
+.content .description .delete a{
+    display: inline-block;
+    width:100%;
+    text-align: center;
+    color: white;
+}
+.content .description .ad-to-carts{
+    width: 50%;
+    background-color: lawngreen;
+    border-radius: 20px;
+    margin: 40px auto;
+    transition: transform 0.2s,box-shadow 0.2s,color 0.2s;
+}
+.content .description .ad-to-carts:hover{
+    transform: scale(1.1,1.1);
+    box-shadow: 1px 1px 5px rgb(188, 212, 151),-1px -1px 5px rgb(188, 212, 151);
+}
+.content .description .ad-to-carts a{
+    display: block;
+    width:100%;
+    padding:5px 10px;
+    text-align: center;
+    color:white;
+    transition: color 0.2s;
+}
+.content .description .ad-to-carts a:hover{
+    color: black;
+}
+.no-order{
+    background-color: white;
+    width: 49%;
+    font-size: 20px;
+    text-align: center;
+    margin: 100px auto;
+    padding: 10px;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+.no-order .create-order{
+    display: block;
+    padding: 10px;
+    margin: 18px auto;
+    width: 78%;
+    background-color: #f37b2d;
+    border-radius: 4px;
+    font-size: 19px;
+    color: white !important;
+    text-align: center;
+    font-weight: bold;
+    transition: transform 0.2s  0.2s,border-radius 0.2s linear ;
+    color:chocolate;
+}
+.no-order .create-order:hover{
+    transform: scale(0.99,0.99);
+    border-radius: 10px;
+}

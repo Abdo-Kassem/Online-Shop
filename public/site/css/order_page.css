@@ -1,0 +1,81 @@
+
+.header{
+    background-color: rgb(255, 168, 168);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 30px auto 0;
+    padding: 10px;
+    font-size: 20px;
+    color: ghostwhite;
+    text-transform: capitalize;
+}
+.cancel{
+    display: inline-block;
+    width:100px;
+    background-color: white;
+    text-align: center;
+    color:rgb(73, 73, 73);
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.content{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    min-height: 400px;
+    max-height: 450px;
+    margin-bottom:30px ;
+    background-color:white;
+    text-transform: capitalize;
+}
+.content img{
+    padding:50px 70px;
+    width:50%;
+    max-height:100%;
+}
+
+.content .description{
+    width:50%;
+    padding: 50px 50px
+}
+.content .description .price .new-price,.content .description .price .old-price,
+.content .description .discount,.content .description .details{
+    padding: 5px;
+    margin: 10px 0;
+    outline: 2px groove greenyellow;
+    background-color: aliceblue;
+    border: 2px groove greenyellow;
+    text-align: center;
+}
+
+.content .description .details .head{
+    display: block;
+    font-weight: bold;
+}
+
+.form{
+    padding:15px;
+}
+.form input[type='submit'],.form input[type='number']{
+    width:100px;
+    padding:5px;
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2),-1px 1px 5px rgba(0,0,0,0.2),
+        1px -1px 5px rgba(0,0,0,0.2),-1px -1px 5px rgba(0,0,0,0.2);
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color:rgba(0,0,0,0.6);
+    font-weight: 600;
+}
+.form input[type='submit']:hover{
+    cursor: pointer;
+}
+.form .star{
+    color: #017601;
+    font-size: 21px;
+    background-color: #eddddd;
+    border-radius: 10px;
+}

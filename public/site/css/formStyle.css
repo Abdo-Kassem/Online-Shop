@@ -1,0 +1,115 @@
+.fail-message{
+    margin: 10px auto;
+    padding:8px;
+    background-color: #f7b5b5;
+    color:brown;
+    font-size: 18px;
+    text-transform: capitalize;
+    text-align: center;
+    max-width:400px;
+    border-radius: 10px;
+}
+.container-wallet-type{
+    margin-top: 100px !important;
+}
+.container{
+    width:80%;
+    background-color: #eeeeee;
+    margin: 20px auto;
+}
+.container header{
+    background-color: #45a049;
+}
+.container header h3{
+    padding: 10px 0;
+    color: white;
+    text-transform: capitalize;
+    width: 70%;
+    margin:auto
+}
+.container .body{
+    width:70% ;
+    margin: auto;
+
+}
+.form-group{
+    margin:10px 0;
+}
+label{
+    text-transform: capitalize;
+    font-weight: 600;
+    color:rgb(110, 109, 109);
+    cursor: pointer;
+}
+input[type=text],input[type=datetime-local],input[type=date],select ,input[type=file],input[type=number],input[type=tel],
+input[type=email],input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color:#6a6a6a;
+    margin: 8px 0;
+    background-color: white;
+  }
+  input[type=radio]{
+    cursor: pointer;
+  }
+  .shipping{
+    cursor: pointer;
+  }
+  select{
+    cursor: pointer;
+  }
+  textarea{
+    width: 100%;
+    height: 86px;
+    padding: 5px 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4c4c4c;
+    border: 1px solid #d9d6d6;
+    border-radius: 5px;
+  }
+  .image-form{
+    position:relative;
+    display: flex;
+    flex-direction: row;
+    margin: 8px 0;
+  }
+  .display-input-image{ /*display input type='file' when select*/
+    position: absolute;
+    top:-10px;
+    right:-150px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
+  .image-form .display-input-image img{
+      display: block;
+      width:100%;
+      height: 100%;
+      border-radius: 50%;
+  }
+  .image-form .file{
+    flex: 1;
+    height: 50%;
+    margin-right: 10px;
+  }
+  input[type=file]{
+    cursor: pointer;
+  }
+  .submite{
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .submite:hover{
+    background-color: #45a049;
+  }

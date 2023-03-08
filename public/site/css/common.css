@@ -1,0 +1,124 @@
+.message{
+
+    margin: 70px auto;
+    padding:8px;
+    background-color: #f7b5b5;
+    color:brown;
+    font-size: 20px;
+    text-transform: capitalize;
+    text-align: center;
+    height: 40px;
+    width:400px;
+    border-radius: 10px;
+}
+body{
+    background-color: rgb(230, 230, 230);
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+.sup-category-image{
+    height: 100%;
+    width: 100%;
+    flex-basis: 200px;
+    border-radius: 20px;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: brown;
+}
+
+a{
+    text-decoration: none;
+}
+.arrow{
+    display: inline-block;
+    padding:3px;
+    border-width:0 2px 2px 0;
+    border-style: solid;
+    transform:translate(0, -4px) rotate(45deg);
+}
+.active span{
+    color:rgba(0,0,0,0.5);
+}
+.active:hover {
+    background-color: transparent !important;
+    cursor:auto;
+}
+.pagination{
+    display:flex;
+    flex-direction: row;
+    padding: 10px 20px 20px 20px;
+    position: relative;
+}
+.pagination .pagination-links{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+.pagination .pagination-links li{
+    display: inline-block;
+}
+.pagination .pagination-links li a{
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 900;
+    padding:5px 13px;
+    background-color: #3899af;
+    border-radius: 5px;
+    color:white;
+    transition: color 0.2s,background-color 0.2s;
+}
+.pagination-links li a:hover{
+    color:white;
+    background-color: black;
+}
+.footer{
+    height: 250px;
+    background-color: white;
+    padding: 20px 89px;
+    margin-top:60px ;
+}
+.footer a{
+    color: rgb(87, 86, 86);
+}
+.footer a:hover{
+    color: black;
+}
+.footer .logo{
+    margin: auto;
+}
+.footer .logo a{
+    display: block;
+    text-align: center;
+    padding: 10px;
+    width:25%;
+    margin: auto;
+    font-size: 35px;
+}
+.footer .links,.footer .pages{
+    padding: 20px;
+    margin:auto;
+    width:70%;
+}
+.footer .links{
+    width:70%;
+}
+.footer .pages{
+    width:40%;
+    display: flex;
+    justify-content: space-around;
+}
+.footer .links ul,.footer .pages ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    margin:0 10px;
+}
+
+.footer .links a,.footer .pages a{
+    padding: 10px 20px;
+    font-size: 20px;
+    text-transform: capitalize;
+}

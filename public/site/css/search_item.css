@@ -1,0 +1,109 @@
+.message{
+
+    margin: 70px auto;
+    padding:8px;
+    background-color: #f7b5b5;
+    color:brown;
+    font-size: 20px;
+    text-transform: capitalize;
+    text-align: center;
+    height: 40px;
+    width:400px;
+    border-radius: 10px;
+}
+
+/*start sub-category*/
+.sub-category-hot-deals{
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+.sub-category-hot-deals .header{ 
+    padding:9px;
+    height:38px;
+    border-bottom: 1px solid rgb(167 167 167);
+} 
+.sub-category-hot-deals .header h7{
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.sub-category-hot-deals .content{
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+    background-color: white;
+}
+.sub-category-hot-deals .content .item{
+    border-radius: 5px;
+    width: 18%;
+    min-height: 250px;
+    margin: 10px;
+    position: relative;
+    padding:10px;
+}
+.sub-category-hot-deals .content .item:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.sub-category-hot-deals .content .item a{
+    display: inline-block;
+    width:100%;
+}
+.sub-category-hot-deals .content .item a img{
+    width: 90%;
+    height: 140px;
+    border-radius: 5px;
+}
+
+.sub-category-hot-deals .content .description .name{
+    text-transform: capitalize;
+    padding: 2px 0;
+    color: #525252;
+}
+.sub-category-hot-deals .content .description .price{
+    padding: 2px 0;
+    color: #930303;
+}
+.name,.price{
+    font-size: 17px;
+}
+.details{
+    font-size: 13px;
+    color: #525252;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+.sub-category-hot-deals .content .description .price span,del{
+    display:block;
+}
+.sub-category-hot-deals .content .description .discount{
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 38px;
+    background-color: #f7b5b5;
+    border-radius: 11px;
+    padding: 5px;
+    color: brown;
+}
+.sub-category-hot-deals .content .item .ad-to-carts{
+    width: 70%;
+    text-align: center;
+    background-color: rgb(255, 171, 67);
+    padding: 3px;
+    font-size: 15px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 5px;
+}
+.sub-category-hot-deals .content .item .ad-to-carts:hover{
+    background-color:chocolate;
+}
+.sub-category-hot-deals .content .item .ad-to-carts a{
+    color:white;
+}
+/*end categories category*/

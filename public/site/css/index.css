@@ -1,0 +1,981 @@
+.main-content .category-content{
+    display: flex;
+    flex-direction: row;
+    padding:15px 0;
+    min-height:400px;
+}
+.main-content .categories{
+    display: flex;
+    flex-direction: column;
+    width: 18%;
+    background-color: white;
+    border-radius: 10px;
+    overflow-y:auto;
+
+}
+.main-content .categories a {
+    text-decoration: none;
+    color: rgba(0,0,0,0.7);
+    padding: 13px 10px;
+    background-color: antiquewhite;
+    margin: 10px 9px;
+    transition: color 0.1s;
+    border-radius: 5px;
+}
+
+.main-content .categories a:hover{
+    color: rgb(247, 142, 14);
+}
+.main-content .categories a span{
+    font-size: 17px;
+    text-transform: capitalize;
+}
+.main-content .categories a i{
+    font-size: 18px;
+    width: 30px;
+    text-align: center;
+}
+.main-content .center-ads{
+    width: 59%;
+    margin: 0 auto;
+    background-color:white;
+}
+
+.main-content .center-ads .slider{
+    height: 100%;
+    position: relative;
+    border-radius: 10px;
+}
+.slider .slider-images{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+.slider .slider-images a{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display:none;
+}
+.slider .slider-images .discount{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    z-index: 1;
+    background-color: #f5c5c5;
+    width: 56px;
+    height: 34px;
+    text-align: center;
+    padding: 8px;
+    color: brown;
+    border-radius: 13px;
+}
+.slider .slider-images img{
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    border:4px solid whitesmoke
+    
+}
+.slider .slider-controller .next{
+    padding: 3px 9px;;
+    border-radius: 50%;
+    border: none;
+    background-color: #bdbdbd;
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 160px;
+    cursor: pointer;
+    font-size: 22px;
+    
+}
+.slider .slider-controller .prev{
+    padding: 3px 9px;;
+    border-radius: 50%;
+    border: none;
+    background-color: #bdbdbd;
+    color: white;
+    position: absolute;
+    left: 5px;
+    top: 160px;
+    cursor: pointer;
+    font-size: 22px;
+}
+.prev:hover,.next:hover{
+    background-color: #747474 !important;
+}
+.active-images{
+    display: block !important;
+}
+.main-content .right-content{
+    width: 20%;
+    border-radius: 10px;
+}
+.main-content .right-content a{
+    display:inline-block;
+    height:48%;
+    width:100%;
+    text-decoration: none;
+}
+.main-content .right-content .bottom-image{
+    margin-top: 10px;
+}
+.main-content .right-content a img{
+    height:100%;
+    width:100%;    
+    border-radius: 10px;
+}
+.main-content .offers{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    padding:15px;
+    border-radius: 5px;
+    height:160px;
+    margin-bottom: 15px;
+}
+.main-content .offers a{
+    width:12.38%;
+    padding-left:5px;
+    padding-right:5px;
+    transition:transform 0.2s;
+    height: 90%;
+}
+.main-content .offers a:hover{
+    transform: scale(1.04,1.04);
+    box-shadow: 2px 2px 5px rgb(224, 224, 224);
+}
+.offers a img{
+    width:100%;
+    height: 100%;
+}
+.main-content .top-deals{
+    height:317px;
+    width:100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.main-content .top-deals .header{
+    height:17%;
+    background-color: white;
+    padding: 10px;
+}
+.main-content .top-deals .header:not(a){
+    text-transform: capitalize;
+    font-size:22px;
+}
+.main-content .top-deals .header a{
+    display: inline-block;
+    transform: translate(707px, 0);
+    font-size:15px;
+    font-weight:bold;
+}
+.main-content .top-deals .content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height:83%;
+    padding: 10px;
+    background-color: white;
+}
+.main-content .top-deals .content a{
+    width:16.66%;
+    height:100%;
+    padding:5px;
+    background-color: white;
+
+}
+.main-content .top-deals .content a:hover{
+    box-shadow: 5px -5px 5px rgb(224 224 224), -5px -5px 5px rgb(224 224 224);
+    transform: scale(1.02,1);
+    border-radius: 5px;
+}
+.main-content .top-deals .content a img{
+    width:100%;
+    height:65%;
+}
+.main-content .top-deals .content a img:hover{
+    border-radius: 10px;
+}
+.top-deals .content a .description{
+    font-size:14px;
+    color:black;
+    padding:10px 5px;
+    line-height: 20px;
+}
+.top-deals .content a .description .name{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.top-deals .content a .description .price .new-price,.top-deals .content a .description .price .old-price{
+    display:block;
+}
+.top-deals .content a .description .price .old-price{
+    color:rgba(0,0,0,0.5);
+    text-decoration: line-through;
+}
+.top-deals .content a .description .discount{
+    position: relative;
+    top: -220px;
+    left: 70%;
+    background-color: #f5c5c5;
+    width: 36px;
+    padding: 3px;
+}
+.free-shiping{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.free-shiping .header{ 
+    height: 17%;
+    background-color: #f5c5c5;
+} 
+.free-shiping .header h4{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+}
+.free-shiping .content{
+    display: flex;
+    flex-direction: row;
+    height:83%;
+}
+.free-shiping .content a{
+    width: 48%;
+    margin: 1%;
+    height: 93%;
+}
+.free-shiping .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.free-shiping .content a img{
+    width:100%;
+    height:100%;
+}
+/*start flash sales*/
+.main-content .flash-sales{
+    height:370px;
+    width:100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: white;
+}
+.main-content .flash-sales .header{
+    height: 15%;
+    background-color: #e10f0f;
+    padding: 10px;
+    color: white;
+    position:relative;
+}
+.main-content .flash-sales .header h4 i{
+    background-color:rgba(255, 145, 10, 0.904);
+    transform: rotate(180deg);
+    text-align: center;
+    padding: 4px 6px;
+    border-radius: 5px;
+}
+.main-content .flash-sales .header:not(a){
+    text-transform: capitalize;
+    font-size:20px;
+}
+
+.main-content .flash-sales .header a{
+    display: inline-block;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    position: absolute;
+    top: 7px;
+    right: 10px;
+}
+.main-content .flash-sales .content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height:85%;
+    margin:10px;
+}
+.main-content .flash-sales .content a{
+    width:16.66%;
+    height:96%;
+    padding:10px;
+    background-color: white;
+    position:relative;
+}
+.main-content .flash-sales .content a:hover{
+    box-shadow: 5px -5px 5px rgb(224 224 224), -5px -5px 5px rgb(224 224 224);
+    transform: scale(1.02,1);
+    border-radius: 5px;
+}
+.main-content .flash-sales .content a img{
+    width:100%;
+    height:55%;
+}
+.main-content .flash-sales .content a img:hover{
+    border-radius: 10px;
+}
+.flash-sales .content a .description{
+    font-size:15px;
+    color:black;
+    padding:10px 5px;
+    line-height: 20px;
+}
+.flash-sales .content a .description .name{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.flash-sales .content a .description .price .new-price,.flash-sales .content a .description .price .old-price{
+    display:block;
+}
+.flash-sales .content a .description .price .old-price{
+    color:rgba(0,0,0,0.5);
+    text-decoration: line-through;
+}
+.flash-sales .content a .description  .time{
+    font-size: 13px;
+}
+.flash-sales .content a .description .item-number #visualization{
+    width:100%;
+    height:8px;
+    background-color:#cf8888;
+    border-radius:10px;
+}
+.flash-sales .content a .description .item-number #visualization span{
+    display:block;
+    width:30px;
+    background-color:rgb(243, 10, 10);
+    height:100%;
+    border-radius:10px;
+}
+
+.flash-sales .content a .description .discount{
+    position: absolute;
+    top: 16px;
+    right: 11%;
+    background-color: #f5c5c5;
+    width: 36px;
+    padding: 3px;
+}
+/*end flash sales*/
+/*start amazing deals*/
+.amazing-deals{
+    height:300px;
+}
+.sub-amazing-deals{
+    height: 250px;
+}
+.amazing-deals,.sub-amazing-deals{
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.amazing-deals .header{ 
+    height: 17%;
+    background-color: #f5c5c5;
+} 
+.amazing-deals .header h4{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+}
+.amazing-deals .content{
+    height: 83%;
+}
+.sub-amazing-deals .content{
+    height: 100%;
+}
+.amazing-deals .content,.sub-amazing-deals .content{
+    display: flex;
+    flex-direction: row;
+}
+.amazing-deals .content a,.sub-amazing-deals .content a{
+    width: 48.5%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    padding:10px;
+    background-color: aliceblue;
+}
+.amazing-deals .content a:first-child,.sub-amazing-deals .content a:first-child{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.amazing-deals .content a:nth-child(2),.sub-amazing-deals .content a:nth-child(2){
+    margin-right: 1%;
+}
+.amazing-deals .content a:hover,.sub-amazing-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.amazing-deals .content a img,.sub-amazing-deals .content a img{
+    width:100%;
+    height:100%;
+}
+/*end amazing deals
+
+/*start free shiping nationa*/
+.main-content .free-shiping-national{
+    height:300px;
+    width:100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: white;
+}
+.main-content .free-shiping-national .header{
+    height: 17%;
+    background-color: #fc9999;
+    padding: 10px;
+    color: white;
+    
+}
+.main-content .free-shiping-national .header:not(a){
+    text-transform: capitalize;
+    font-size:20px;
+}
+
+.main-content .free-shiping-national .header a{
+    display: inline-block;
+    transform: translate(720px,0);
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    padding: 10px
+}
+.main-content .free-shiping-national .content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height:83%;
+    margin:10px;
+}
+.main-content .free-shiping-national .content a{
+    width:16.66%;
+    height:100%;
+    padding:10px;
+    background-color: white;
+
+}
+.main-content .free-shiping-national .content a:hover{
+    box-shadow: 5px -5px 5px rgb(224 224 224), -5px -5px 5px rgb(224 224 224);
+    transform: scale(1.02,1);
+    border-radius: 5px;
+}
+.main-content .free-shiping-national .content a img{
+    width:100%;
+    height:65%;
+}
+.main-content .flash-sales .content a img:hover{
+    border-radius: 10px;
+}
+.free-shiping-national .content a .description{
+    font-size:14px;
+    color:black;
+    padding:10px 5px;
+    line-height: 20px;
+}
+.free-shiping-national .content a .description .name{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.free-shiping-national .content a .description .price .new-price,.free-shiping-national .content a .description .price .old-price{
+    display:block;
+}
+.free-shiping-national .content a .description .price .old-price{
+    color:rgba(0,0,0,0.5);
+    text-decoration: line-through;
+}
+.free-shiping-national .content a .description .item-number #visualization{
+    width:100%;
+    height:8px;
+    display:inline-block;
+    background-color:#e10f0f;
+    border-radius:10px;
+}
+
+.free-shiping-national .content a .description .discount{
+    position: relative;
+    top: -220px;
+    left: 70%;
+    background-color: #f5c5c5;
+    width: 36px;
+    padding: 3px;
+}
+/*end free shiping national*/
+/*start free shiping*/
+.free-shiping{
+    height:400px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.free-shiping .header{ 
+    height: 15%;
+    background-color: #f5c5c5;
+} 
+.free-shiping .header h4{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    text-transform: capitalize;
+}
+.free-shiping .request{
+    display: flex;
+    flex-direction: row;
+    height:85%;
+    flex-wrap:wrap ;
+    padding: 10px 10px 3px 10px;
+}
+.main-content .request a{
+    width:16.6%;
+    padding-left:5px;
+    padding-right:5px;
+    transition:transform 0.2s;
+    height: 47%;
+}
+.main-content .request a:hover{
+    transform: scale(1.04,1.04);
+    box-shadow: 2px 2px 5px rgb(224, 224, 224);
+}
+.request a img{
+    width:100%;
+    height: 100%;
+}
+/*end free shiping*/
+/*start more-deals deals*/
+.more-deals{
+    height:330px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.more-deals .header{ 
+    height: 16%;
+    background-color: #FEE2CC;
+} 
+.more-deals .header h4{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+.more-deals .content{
+    display: flex;
+    flex-direction: row;
+    height:84%;
+    padding:15px 25px;
+}
+.more-deals .content a{
+    width: 48.5%;
+    border-radius: 5px;
+}
+.more-deals .content a:first-child{
+    margin-right: 10px;
+}
+.more-deals .content a:nth-child(2){
+    margin-left: 15px;
+}
+.more-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.more-deals .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 5px;
+    padding:10px;
+}
+/*end more deals
+/*start ads*/
+.ads{
+    height:250px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.ads .content{
+    display: flex;
+    flex-direction: row;
+    height:100%;
+}
+.ads .content a{
+    width: 48.5%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+}
+.ads .content a:first-child{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.ads .content a:nth-child(2){
+    margin-right: 1%;
+}
+.ads .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.ads .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 5px;
+}
+/*end adds*/
+/*start back to school*/
+.back-to-school{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.back-to-school .header{ 
+    height: 17%;
+    background-color:#EDF1CE;
+} 
+.back-to-school .header h4{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+.back-to-school .content{
+    display: flex;
+    flex-direction: row;
+    height:83%;
+}
+.back-to-school .content a{
+    width: 32%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    border-radius: 25px;
+}
+.back-to-school .content a:first-child{
+    margin-left: 1%;
+    margin-right: 0.5%;
+}
+.back-to-school .content a:nth-child(2){
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+.back-to-school .content a:nth-child(3){
+    margin-left: 0.5%;
+    margin-right: 1%;
+}
+.back-to-school .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.back-to-school .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 25px;
+}
+/*end back to school*/
+/*start top selling */
+.main-content .top-selling{
+    height:317px;
+    width:100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.main-content .top-selling .header{
+    /*
+        this style selling number 1 and style selling number 5 and also style all selling 
+        except background color change  also
+    */
+    height:17%;
+    background-color: #EDF1CE;
+    padding: 10px;
+}
+.main-content .top-selling .top-selling-another-color{
+    /* i create this class to change the background color of top selling*/
+    background-color:#FDECF0 !important;
+}
+.main-content .top-selling3 .header{
+    background-color: #E2F5FF;
+}
+.main-content .top-selling4 .header{
+    background-color:#FCE7BB;
+}
+.main-content .top-selling .header:not(a){
+    text-transform: capitalize;
+    font-size:22px;
+}
+.main-content .top-selling .header a{
+    display: inline-block;
+    transform: translate(855px, 0);
+    font-size:15px;
+    color:black;
+}
+.main-content .top-selling .content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height:83%;
+    padding: 10px;
+    background-color: white;
+}
+.main-content .top-selling .content a{
+    width:16.66%;
+    height:100%;
+    padding:5px;
+    background-color: white;
+
+}
+.main-content .top-selling .content a:hover{
+    box-shadow: 5px -5px 5px rgb(224 224 224), -5px -5px 5px rgb(224 224 224);
+    transform: scale(1.02,1);
+    border-radius: 5px;
+}
+.main-content .top-selling .content a img{
+    width:100%;
+    height:65%;
+}
+.main-content .top-selling .content a img:hover{
+    border-radius: 10px;
+}
+.top-selling .content a .description{
+    font-size:14px;
+    color:black;
+    padding:10px 5px;
+    line-height: 20px;
+}
+.top-selling .content a .description .name{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.top-selling .content a .description .price .new-price,.top-selling .content a .description .price .old-price{
+    display:block;
+}
+.top-selling .content a .description .price .old-price{
+    color:rgba(0,0,0,0.5);
+    text-decoration: line-through;
+}
+.top-selling .content a .description .discount{
+    position: relative;
+    top: -220px;
+    left: 70%;
+    background-color: #f5c5c5;
+    width: 36px;
+    padding: 3px;
+}
+/*end top selling*/
+/*start wommen hot deals*/
+.wommen-hot-deals{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.wommen-hot-deals .header{ 
+    height: 17%;
+    background-color:#FDECF0;
+} 
+.wommen-hot-deals .header h3{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    overflow: hidden;
+    text-transform: uppercase;
+    word-spacing: 3px;
+}
+.wommen-hot-deals .content{
+    display: flex;
+    flex-direction: row;
+    height:83%;
+}
+.wommen-hot-deals .content a{
+    width: 32%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    border-radius: 25px;
+}
+.wommen-hot-deals .content a:first-child{
+    margin-left: 1%;
+    margin-right: 0.5%;
+}
+.wommen-hot-deals .content a:nth-child(2){
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+.wommen-hot-deals .content a:nth-child(3){
+    margin-left: 0.5%;
+    margin-right: 1%;
+}
+.wommen-hot-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.wommen-hot-deals .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 25px;
+}
+/*end wommens hot deals*/
+/*style top selling in top selling section above*/
+/*start mens hot deals*/
+.men-hot-deals{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.men-hot-deals .header{ 
+    height: 17%;
+    background-color:#E2F5FF;
+} 
+.men-hot-deals .header h3{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    overflow: hidden;
+    text-transform: uppercase;
+    word-spacing: 3px;
+}
+.men-hot-deals .content{
+    display: flex;
+    flex-direction: row;
+    height:83%;
+}
+.men-hot-deals .content a{
+    width: 32%;
+    margin-top:1%;
+    margin-bottom: 1%;
+    border-radius: 25px;
+}
+.men-hot-deals .content a:first-child{
+    margin-left: 1%;
+    margin-right: 0.5%;
+}
+.men-hot-deals .content a:nth-child(2){
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+.men-hot-deals .content a:nth-child(3){
+    margin-left: 0.5%;
+    margin-right: 1%;
+}
+.men-hot-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.men-hot-deals .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 25px;
+}
+/*end mens hot deals*/
+/*top selling style in above top selling*/
+/*start kitchen hot deals*/
+.phones-hot-deals{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.phones-hot-deals .header{ 
+    height: 50px;
+    background-color:#FCE7BB;
+} 
+.phones-hot-deals .header h5{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    text-transform: uppercase;
+    word-spacing: 3px;
+}
+
+.phones-hot-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+.phones-hot-deals .content a img{
+    width:100%;
+    height:100%;
+    border-radius: 25px;
+}
+/*end kitchen hot deals*/
+/*top selling style exist in top selling above*/
+/*start television hot deals*/
+.television-hot-deals{
+    height:300px;
+    background-color:white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.television-hot-deals .header{ 
+    height: 50px;
+    background-color:#EDF1CE;
+} 
+.television-hot-deals .header h5{
+    text-align: center;
+    padding:15px;
+    font-size: 20px;
+    font-weight: bold;
+    overflow: hidden;
+    text-transform: uppercase;
+    word-spacing: 3px;
+}
+.television-hot-deals .content,.phones-hot-deals .content{
+    display: flex;
+    flex-direction: row;
+    height:250px;
+    padding:20px;
+    overflow: hidden;
+}
+.television-hot-deals .content a,.phones-hot-deals .content a{
+    border-radius: 25px;
+    margin:0 5px;
+}
+
+.television-hot-deals .content a:hover{
+    transform: scale(1.01,1.01);
+    box-shadow: 5px -5px 7px rgb(224, 224, 224),-5px -5px 7px rgb(224, 224, 224),
+                -5px 5px 7px rgb(224, 224, 224),5px 5px 7px rgb(224, 224, 224);
+}
+/*end kitchen hot deals*/
+/*top selling style in above top selling*/

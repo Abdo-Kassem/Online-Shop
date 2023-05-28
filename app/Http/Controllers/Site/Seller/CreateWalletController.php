@@ -31,9 +31,12 @@ class CreateWalletController extends Controller
     public function createWallet($data,$sellerID):bool
     {
         $phone = Phone::where('phone_number',$data['phone_number'])->first();
+
         if($phone && isset($data['wallet_approach'])){
+            
             $phone->update(['is_wallet'=>1,'wallet_approach'=>$data['wallet_approach']]);
             return true;
+
         }else if(isset($data['wallet_approach'])){
             $phone = Phone::insert([
                 'phone_number'=>$data['phone_number'],

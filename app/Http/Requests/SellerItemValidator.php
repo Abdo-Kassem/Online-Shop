@@ -34,7 +34,7 @@ class SellerItemValidator extends FormRequest
             'price'=>'required|numeric',
             'details'=>'required',
             'discount'=>'required_with_all:start_time,end_time',
-            'start_time'=>'nullable|after_or_equal:'.now(),
+            'start_time'=>'nullable|after_or_equal:'.date('Y-m-d'),
             'end_time'=>'nullable|after:start_time',
         ];
     }

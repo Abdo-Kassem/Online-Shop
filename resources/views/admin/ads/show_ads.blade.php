@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <header >
-        <h3>candidate items of ads</h3>
+        <h3>ads items</h3>
     </header>
     <div class='body'>
         @if(session()->has('fail'))

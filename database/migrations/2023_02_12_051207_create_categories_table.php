@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name',50);
             $table->decimal('selling_cost');
-            $table->string('image',100);
+            $table->string('image');
         });
     }
 

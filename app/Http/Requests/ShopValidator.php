@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Seller;
+use App\Models\Shop;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ShopValidator extends FormRequest
 {
@@ -26,10 +30,16 @@ class ShopValidator extends FormRequest
         return [//like this assiut-manflout-25 mohamed street
             'name'=>'required|string|unique:shops,name',
             'address'=>'required|regex:/^([A-Za-z]{4,11})(\,[A-Za-z]+)*(\s[0-9]+)*(\s[A-Za-z]+)+$/',
-            'post_number'=>'required|digits_between:5,5',
+            'post_number'=>'required||unique:shops,post_number,'.Auth::guard('seller')->id(),
+            'post_number' => [
+                'required',
+                'digits_between:5,5',
+                 Rule::unique('shops','post_number')->whereNotIn('sellerID',[Auth::guard('seller')->id()])
+            ],
             'sended_person_email'=>'required|email',
         ];
     }
+    
     public function messages(){
         return [
             'name.required'=>'you must enter shop name',

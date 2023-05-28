@@ -14,7 +14,7 @@ class AnalyzeWeek extends Controller
 
         $sellerID = Auth::guard('seller')->id();
 
-        $orders = SellerServices::analyzeWeek($sellerID);
+        $orders = (new SellerServices)->analyzeWeek($sellerID);
 
         return view('site.selling.analyze_week',compact('orders'));
 

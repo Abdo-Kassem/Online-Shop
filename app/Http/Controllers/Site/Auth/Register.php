@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 class Register extends Controller
 {
 
+    
+
     public function getForm()
     {
         return view('site.auth.register');
@@ -20,7 +22,7 @@ class Register extends Controller
 
     public function register(RegisterValidator $request)
     {
-        $user = UserServices::store($request);
+        $user = (new UserServices)->store($request);
 
         event(new EventsRegister($user));
             

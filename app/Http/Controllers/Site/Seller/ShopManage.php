@@ -13,20 +13,23 @@ class ShopManage extends Controller
      * manage shop operation 
      */
 
-     private $sellerID;
+     private $sellerID , $shop;
 
-     public function __construct()
+     public function __construct(ShopServices $shop)
      {
         $this->middleware(function ($request, $next) {
             $this->sellerID = Auth::guard('seller')->id();
             return $next($request);
         });
+
+        $this->shop = $shop;
+
      }
 
 
     public function create()
     {
-        $catgories = ShopServices::create($this->sellerID);
+        $catgories = $this->shop->create($this->sellerID);
 
         $city = ['Cairo','Alexandria','Giza','bur saeid','Suez','The Red Sea','elbehera',
             'El Mansoura','Tanta','Asyut','Fayoum','Zagazig','Ismailia','Aswan','Damanhur',
@@ -39,7 +42,7 @@ class ShopManage extends Controller
 
     public function store(ShopValidator $request)
     {
-        return $request->expectsJson()?'yes':'no';
+
         $shop = [
             'name'=>$request->name,
             'address'=>$request->address,
@@ -50,7 +53,7 @@ class ShopManage extends Controller
             'created_at'=>now(),
         ];
         
-        if(ShopServices::store($this->sellerID,$shop)){
+        if($this->shop->store($this->sellerID,$shop)){
             return redirect()->back()->with('success','done');
         }else{
             return redirect()->back()->with('fail','sorry try again');

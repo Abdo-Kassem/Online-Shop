@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Employee;
+namespace App\Http\Controllers\Testing;
+
+use Illuminate\Support\Facades\App;
 
 class Employee
 {
@@ -36,10 +38,6 @@ class Employee
     }
 }
 
-namespace App\Manager;
-
-use App\Employee\Employee;
-
 class EmployeeManager extends Employee
 {
     public function getSalery():float
@@ -51,7 +49,7 @@ class EmployeeManager extends Employee
     }
 }
 
-class Manager{
+class Test{
 
     protected Employee $emp ;
     protected EmployeeManager $empManager ;
@@ -64,10 +62,12 @@ class Manager{
 
     public function main()
     {
-        return $this->emp->welcome();
+        //return $this->emp->welcome();
+        echo env('APP_URL');
+       
+        echo config('app.locale','ar');
+       echo now();
     }
 
 }
 
-$manager = new Manager();
-echo $manager->main();

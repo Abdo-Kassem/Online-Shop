@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminServices {
 
-    public static function update($request)
+    public function update($request)
     {
-        $admin = self::getAdmin();
+        $admin = $this->getAdmin();
         $admin->name = $request->name;
         $admin->email = $request->email;
         
@@ -41,7 +41,7 @@ class AdminServices {
         }
     }
   
-    public static function getAdmin(){
+    public function getAdmin(){
         return Admin::first();
     }
 

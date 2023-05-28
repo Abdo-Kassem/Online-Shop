@@ -3,7 +3,6 @@
 use App\Http\Controllers\Site\Auth\Login;
 use App\Http\Controllers\Site\Auth\Logout;
 use App\Http\Controllers\Site\Auth\Register;
-use App\Http\Controllers\Site\CreateItem;
 use App\Http\Controllers\Site\Auth\Email_Verification;
 use App\Http\Controllers\Site\BasketSetting;
 use App\Http\Controllers\Site\FeedbackManager;
@@ -16,6 +15,7 @@ use App\Http\Controllers\Site\Seller\Selling;
 use App\Http\Controllers\Site\ShowItem;
 use App\Http\Controllers\Site\SubCategory;
 use App\Http\Controllers\Site\UserAcount;
+use App\Http\Controllers\Testing\Test;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,9 +35,6 @@ route::controller(HomeController::class)->group(function(){
     route::get('/home', 'index')->name('home');
     route::get('/', 'index')->name('home');
 });
-/*route::get('home',function(){
-    return view('site.index');
-});*/
 
 route::controller(UserAcount::class)->group(function(){
 
@@ -99,13 +96,13 @@ route::controller(Login::class)->group(function(){
 });
 
 route::controller(Register::class)->group(function(){
-    route::get('register','getForm')->name('register');
+    route::get('register','getForm')->name('register')->middleware('guest:web');
     route::post('register','register')->name('register');
 });
 
 route::get('verify/{token}',[Email_Verification::class,'verifyEmail'])->name('user.email.verify');
 
 route::get('logout',[Logout::class,'logout'])->name('user.logout');
-
+route::get('tests',[Test::class,'main']);
 require __DIR__ . '/admin.php';
 require __DIR__ . '/seller.php';

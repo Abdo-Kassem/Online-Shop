@@ -2,21 +2,16 @@
 
 namespace App\Services;
 
+use App\Models\Category;
 use App\Models\Shop;
 
 class ShopServices {
 
-    public static function getBySellerID($sellerID,array $columns = null)
-    {
-        if($columns !== null)
-            return Shop::select($columns)->where('sellerID',$sellerID)->get();
-
-        return Shop::where('sellerID',$sellerID)->get();
-    }
+   
     /**
      * if send empty array this mean that will us session to save shop
      */
-    public static function store($sellerID,array $shop):bool
+    public function store($sellerID,array $shop):bool
     {
         if(count($shop)>0){
             $shop['sellerID'] = $sellerID;
@@ -27,14 +22,14 @@ class ShopServices {
         return Shop::insert($shop);
     }
 
-    public static function create($sellerID)
+    public function create($sellerID)
     {
         
         $sellerCatyegoryShops = Shop::select('category_id')->where('sellerID',$sellerID)->get();
         
         $endfor = $sellerCatyegoryShops->count();
 
-        $catgories = CategoryServices::getAll(['name','id']);
+        $catgories = Category::select((['name','id']))->get();(['name','id']);
 
         foreach($catgories as $catgoryKey=>$catgoryValue){
 
@@ -49,13 +44,13 @@ class ShopServices {
         return $catgories;
     }
 
-    public static function getEditeData($sellerID,$shopID,&$shop)
+    public function getEditeData($sellerID,$shopID,&$shop)
     {
         $shop = Shop::where('sellerID',$sellerID)->findorfail($shopID);
 
         $sellerCategories = Shop::where('id','!=',$shopID)->select('category_id')->get();
 
-        $categories = CategoryServices::getAll(['name','id']);
+        $categories = Category::select((['name','id']))->get();(['name','id']);
 
         $categoryCount = $categories->count();
 
@@ -74,7 +69,7 @@ class ShopServices {
         return $categories;
     }
 
-    public static function update($request,$shopID,$sellerID)
+    public function update($request,$shopID,$sellerID)
     {
         
         $request->validate(self::rules($request->shopID),self::messages());
@@ -92,7 +87,7 @@ class ShopServices {
 
     }
 
-    private static function rules($shopID){
+    private function rules($shopID){
         return [//like this assiut-manflout-25 mohamed street
             'shopName'=>'required|string|unique:shops,name,'.$shopID,
             'shopAddress'=>'required|regex:/^([A-Za-z]{4,11})(\,[A-Za-z]+)*(\s[0-9]+)*(\s[A-Za-z]+)+$/',
@@ -100,7 +95,7 @@ class ShopServices {
             'email'=>'required|email',
         ];
     }
-    private static function messages(){
+    private function messages(){
         return [
             'shopName.required'=>'you must enter shop name',
             'shopName.string'=>'must be string',
@@ -113,7 +108,7 @@ class ShopServices {
         ];
     }
 
-    public static function destroy($shopID,$sellerID)
+    public function destroy($shopID,$sellerID)
     {
         $shops = Shop::where('sellerID',$sellerID)->count();
 

@@ -7,22 +7,31 @@ use App\Services\SellerServices;
 
 class SellerSetting extends Controller
 {
+
+    private $seller;
+
+    public function __construct(SellerServices $seller)
+    {
+        $this->seller = $seller;
+    }
+
+
     public function index($type=0)
     {
-        $sellers = SellerServices::getAllByType($type);
+        $sellers = $this->seller->getAllByType($type);
         return view('admin.seller.show_seller',compact('sellers'));
     }
 
     public function deleteSeller($sellerID)
     {
-        if(SellerServices::destroy($sellerID))
+        if($this->seller->destroy($sellerID))
             return redirect()->back()->with('success','deletion done');
         return redirect()->back()->with('fail','deletion fail');
     }
 
     public function activeSeller($sellerID)
     {
-        if(SellerServices::activeSeller($sellerID))
+        if($this->seller->activeSeller($sellerID))
             return redirect()->back()->with('success','seller agree done');
         return redirect()->back()->with('fail','seller agree done');
     }

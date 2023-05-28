@@ -2,45 +2,43 @@
 
 namespace App\Services;
 
-use App\interfaces\StaticServicesContract;
+use App\interfaces\ServicesContract;
 use App\Models\Category;
 use App\Models\Items;
+use App\Traits\CalculateNewPrice;
 use App\Traits\RemoveImage;
 use App\Traits\SaveImage;
+use App\Traits\TopPicks;
 use Illuminate\Http\Request;
 
-class CategoryServices implements StaticServicesContract{
+class CategoryServices implements ServicesContract{
 
     use SaveImage;
     use RemoveImage;
-   
-    public static function getSubCategories($categoryID)
+    use TopPicks;
+    use CalculateNewPrice;
+
+    private $subCate;
+
+    public function __construct(SubCategoryServices $subCate)
     {
-        $category = Category::findorfail($categoryID);
-
-        $subCategories = $category->supCategories()->paginate(PAGINATION);
-
-        foreach($subCategories as $subCategory){
-            $subCategory->itemNum = Items::where('subcategory_id',$subCategory->id)->count();
-        }  
-        
-        return $subCategories;
+        $this->subCate = $subCate;
     }
-
+    
     /**
      * return one category and its subcategory or null if not exist
      */
-    public static function getCategoryAndsubCates($column,$operator,$value)
+    public  function getCategoryAndsubCates($column,$operator,$value)
     {
         return Category::with('supCategories')->where($column,$operator,$value)->first();
     }
 
-    public static function getCategoriesAndChields()
+    public function getCategoriesAndChields()
     {
         return Category::with('supCategories')->get();
     }
 
-    private static function getCategoriesDetails($categoryID,&$categoryName)
+    private  function getCategoriesDetails($categoryID,&$categoryName)
     {
         $category = static::getByID($categoryID,['id','name']);
         $subCategories = $category->supCategories;
@@ -52,7 +50,7 @@ class CategoryServices implements StaticServicesContract{
             if(count($subCategory->items)!=0){
 
                 foreach( $subCategory->items as $item){
-                    $item->newPrice = ItemServices::calcNewPrice($item->discount->discount_value,$item->price);
+                    $item->newPrice = $this->calcNewPrice($item->discount->discount_value,$item->price);
                 }
 
             }else{
@@ -67,15 +65,42 @@ class CategoryServices implements StaticServicesContract{
         return $subCategories;
     }
 
-    public static function getCategory($categoryId , &$namespace)
+    public function getTopSellingItems($cats) 
+    {
+        $count = $cats->count();
+
+        if($count>0){
+
+            $topSelling = [];
+  
+            foreach($cats as $cat){
+                foreach($cat->supCategories as $subCategory){
+
+                    $topSelling[$subCategory->name] = $this->subCate->subCatgoryTopSellingItems(
+                        $subCategory->id
+                    );
+                    
+                }
+            } 
+            
+            return $topSelling;
+        }
+
+        return null;
+        
+    }
+
+    public  function getCategory($categoryId , &$namespace)
     {
         $count = 0;  //to refer index of subCategories
         
-        $subCategories = static::getCategoriesDetails($categoryId,$namespace);
+        $subCategories = $this->getCategoriesDetails($categoryId,$namespace);
 
         foreach($subCategories as $subCategory){
-            $subCategories[$count]->topPicks = ItemServices::getTopPicksItems($subCategory->id);
+
+            $subCategories[$count]->topPicks = $this->getTopPicksItems($subCategory->id);
             $count++;
+
         }
 
         return $subCategories;
@@ -84,7 +109,7 @@ class CategoryServices implements StaticServicesContract{
     /**
      * get all catagoery selected columns only not use pagination
      */
-    public static function getAll(array $columns)
+    public  function getAll(array $columns)
     {
         return Category::select($columns)->get();
     }
@@ -92,7 +117,7 @@ class CategoryServices implements StaticServicesContract{
     /**
      * return catagory and subcategory number
      */
-    public static function all()
+    public  function all()
     {
         $categories = Category::paginate(PAGINATION);
         foreach($categories as $cate){
@@ -101,9 +126,9 @@ class CategoryServices implements StaticServicesContract{
         return $categories;
     }
 
-    public static function store($request)
+    public  function store($request)
     {
-        $imageName = static::saveImage($request->image,'site\images\categories_images');
+        $imageName = $this->saveImage($request->image,'site\images\categories_images');
 
         return Category::insert([
             'name'=>$request->categoryName,
@@ -112,7 +137,7 @@ class CategoryServices implements StaticServicesContract{
         ]);
     }
 
-    public static function update($request)
+    public  function update($request)
     {
         $validatedData = self::validat($request);
         
@@ -121,7 +146,7 @@ class CategoryServices implements StaticServicesContract{
         if(isset($request->image)){
 
             $oldImageName = $category->image;
-            $imageName = static::saveImage($request->image,'site\images\categories_images');
+            $imageName = $this->saveImage($request->image,'site\images\categories_images');
 
             $category->update([
                 'name'=>$request->categoryName,
@@ -129,7 +154,7 @@ class CategoryServices implements StaticServicesContract{
                 'image' => $imageName
             ]);
 
-            return static::RemoveImage('site/images/categories_images/'.$oldImageName);
+            return $this->RemoveImage('site/images/categories_images/'.$oldImageName);
             
         }
         
@@ -140,62 +165,75 @@ class CategoryServices implements StaticServicesContract{
     
     }
 
-    public static function destroy($id)
+    public  function destroy($id)
     {
         $category = Category::findorfail($id);
 
         if($category){
 
-            static::RemoveImage('site/images/categories_images/'.$category->image);
+            $this->RemoveImage('site/images/categories_images/'.$category->image);
 
             return $category->delete();
         }
         return false;
     }
 
-    public static function catgoryTopSellingItems($cateId)
+
+
+
+    public function catgoryTopSellingItems($cateId)
     {
         $subCates = Category::findorfail($cateId)->supCategories;
         $topSellingItems = [];
         foreach($subCates as $subCate){
-            $topSellingItems[]=ItemServices::getTopPicksItems($subCate->id);
+            $topSellingItems[] = $this->getTopPicksItems($subCate->id);
         }
         return $topSellingItems;
     }
 
-    public static function getCategoryTopDelas()
-    {  //top deals = top selling
+
+    
+
+    public function getCategoryTopDelas()
+    {  
+        //top deals = top selling
         $topDaals = [];
         $categoriseAndSubCates = Category::with(['supCategories'=>function($q){
             $q->select(['id','category_id']);
         }])->select(['id','name'])->get();
 
         foreach($categoriseAndSubCates as $categoryAndSubCate){
+
             $topDaals[$categoryAndSubCate->name] = [];
+
             foreach($categoryAndSubCate->supCategories as $subCate){
-                $topDaals[$categoryAndSubCate->name] = array_merge($topDaals[$categoryAndSubCate->name],ItemServices::getHasTopDiscountBy($subCate->id));
+                $topDaals[$categoryAndSubCate->name] = array_merge(
+                    $topDaals[$categoryAndSubCate->name],
+                    (new ItemServices(new SubCategoryServices))->getHasTopDiscountBy($subCate->id)
+                );
             }
+
         }
         return $topDaals;
-        return view('site.topDealsAll',compact('topDeals'));
+       
     }
 
     /**
      * return columns category only
      */
-    public static function getByID($id,array $columns = null)//getCateByID
+    public function getByID($id,array $columns = null)//getCateByID
     {
         if($columns !== null)
             return Category::select($columns)->findorfail($id);
         return Category::findorfail($id);
     }
 
-    public static function validat(Request $request)
+    private  function validat(Request $request)
     {
         return $request->validate(self::rules($request->categoryID),self::messages());
     }
 
-    private static function rules($categoryID)
+    private  function rules($categoryID)
     {
         return [
             'categoryName'=>'required|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/|unique:categories,name,'.$categoryID,
@@ -203,7 +241,7 @@ class CategoryServices implements StaticServicesContract{
         ];
     }
 
-    private static function messages()
+    private  function messages()
     {
         return [
             'categoryName.required'=>'name can not empty',

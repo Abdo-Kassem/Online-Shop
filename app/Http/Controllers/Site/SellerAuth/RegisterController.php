@@ -66,7 +66,7 @@ class RegisterController extends Controller
 
         $seller = session()->get('seller'); //return array
 
-        $res = SellerServices::store($seller);
+        $res = (new SellerServices)->store($seller);
 
         return $res;
 

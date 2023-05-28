@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('id',15)->primary();
             $table->string('name',50);
             $table->text('email',100);
-            $table->string('image',100);
+            $table->string('image');
             $table->string('password',100);
             $table->tinyInteger('acount_type')->comment('stor number of item exist')->default(1);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

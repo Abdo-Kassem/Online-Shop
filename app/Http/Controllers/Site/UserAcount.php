@@ -17,7 +17,7 @@ class UserAcount extends Controller
     public function __construct(UserServices $userServices)
     {
         $this->userServices = $userServices;
-        return $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function index()
@@ -37,7 +37,7 @@ class UserAcount extends Controller
 
     public function update(UserEditeValidator $request)
     {
-        if(UserServices::update($request))
+        if($this->userServices->update($request))
             return redirect()->route('user.acount')->with('success','done');
         else
             return redirect()->back()->with('fail','updation fail try again');

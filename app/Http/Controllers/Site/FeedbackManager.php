@@ -13,7 +13,7 @@ class FeedbackManager extends Controller
     {
         $userID = Auth::user()->id;
         
-        return FeedbackServices::store($request,$userID);
+        return (new FeedbackServices)->store($request,$userID);
         /*if($res)
             return response()->json(['success'=>'success']);
         return response()->json(['fail'=>'add feedback fail']);*/

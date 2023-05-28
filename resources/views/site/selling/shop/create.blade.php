@@ -71,7 +71,7 @@
                         <span style='color:brown' >{{$message}}</span>
                     @enderror
                 </div>
-                
+
                 <button type="submit" class="submite">continue</button>
             </form>
         </div>

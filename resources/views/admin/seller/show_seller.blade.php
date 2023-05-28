@@ -164,11 +164,7 @@
         @else
             <div class='message'> no sellers exist</div>
         @endif
-        <div class='add-category'>
-            <a href="{{route('item.create.form')}}">
-                <i class="fas fa-plus"> add item</i>
-            </a>
-        </div>
+       
     </div>
     <script>
         document.getElementById('seller').classList.add('active');

@@ -2,18 +2,22 @@
 
 namespace App\Services;
 
-use App\interfaces\StaticServicesContract;
+use App\interfaces\ServicesContract;
+use App\Models\Category;
+use App\Models\Items;
 use App\Models\SupCategory;
 use App\Traits\RemoveImage;
 use App\Traits\SaveImage;
+use App\Traits\TopPicks;
 
-class SubCategoryServices implements StaticServicesContract
+class SubCategoryServices implements ServicesContract
 {
 
     use SaveImage;
     use RemoveImage;
+    use TopPicks;
   
-    public static function all()
+    public  function all()
     {
         $subcategories = SupCategory::paginate(PAGINATION);
 
@@ -27,15 +31,31 @@ class SubCategoryServices implements StaticServicesContract
         return $subcategories;
     }
 
-    public static function store($request)
+    public function getByID($id)
     {
-        $category = CategoryServices::getByID($request->categoryID);
+        return SupCategory::findorfail($id);
+    }
+
+    public function getSubCategoriesByCatID($catID) 
+    {
+        $subCategories = SupCategory::where('id',$catID)->paginate(PAGINATION);
+
+        foreach($subCategories as $subCategory){
+            $subCategory->itemNum = Items::where('subcategory_id',$subCategory->id)->count();
+        }  
+        
+        return $subCategories;
+    }
+    
+    public  function store($request)
+    {
+        $category = Category::findorfail($request->categoryID);
 
         if(SupCategory::where('category_id',$request->categoryID)->where('name',$request->subcategoryName)->exists()){
             return redirect()->back()->with('fail','sub-category exist');
         }
 
-        $imageName = static::saveImage($request->image,'site\images\subcategories_image');
+        $imageName = $this->saveImage($request->image,'site\images\subcategories_image');
 
         return SupCategory::insert([
             'name'=>$request->subcategoryName,
@@ -45,16 +65,16 @@ class SubCategoryServices implements StaticServicesContract
        
     }
 
-    public static function update($request)
+    public function update($request)
     {
 
-        $category = CategoryServices::getByID($request->categoryID);;
-        $subCate = SubCategoryServices::getByID($request->subcategoryID);
+        $category = Category::findorfail($request->categoryID);
+        $subCate = SupCategory::finorfail($request->subcategoryID);
 
         if(isset($request->image)){
 
-            static::RemoveImage('site/images/subcategories_image/'.$subCate->image);
-            $imageName = static::saveImage($request->file('image'),'site/images/subcategories_image');
+            $this->RemoveImage('site/images/subcategories_image/'.$subCate->image);
+            $imageName = $this->saveImage($request->file('image'),'site/images/subcategories_image');
             return $subCate->update([
                 'name'=>$request->subcategoryName,
                 'category_id'=>$request->categoryID,
@@ -70,60 +90,49 @@ class SubCategoryServices implements StaticServicesContract
 
     }
 
-    public static function destroy($id)
+    public  function destroy($id)
     {
 
-        $subcategory = SubCategoryServices::getByID($id);
+        $subcategory = SupCategory::findorfail($id);
 
         if($subcategory){
 
             if($subcategory->delete()){
-                return static::RemoveImage("site/images/subcategories_image/".$subcategory->image);
+                return $this->RemoveImage("site/images/subcategories_image/".$subcategory->image);
             }
-            return false;
+            return true;
         }
             
         return false;
     }
 
-    public static function getByID($id,array $columns = null)
-    {
-        if($columns != null)
-            return SupCategory::select($columns)->findorfail($id);
-        return SupCategory::findorfail($id);
-    }
-
-    public static function getParent(SupCategory $subCate):string
-    {
-        return $subCate->category->name;
-    }
-
     /**
      * return pagination items
      */
-    public static function getSubcategoriesItems(SupCategory $subCate)
+    public  function getSubcategoriesItems(SupCategory $subCate)
     {
         return $subCate->items()->paginate(PAGINATION);
     }
 
-    public static function subCatgoryTopSellingItems($subCateId)
+    public  function subCatgoryTopSellingItems($subCateId)
     {
-        return ItemServices::getTopPicksItems($subCateId);
+        return $this->getTopPicksItems($subCateId);
     }
     
-    public static function getSupCategory($subCateID,&$categoryName):SupCategory
+    public function getSupCategory($subCateID,&$categoryName):SupCategory
     {
-        $subCategory = static::getByID($subCateID);
+        $subCategory = $this->getByID($subCateID);
+
         if(! isset($subCategory))
             return abort('404');
        
-        $subCategory->items =  static::getSubcategoriesItems($subCategory);
+        $subCategory->items =  $this->getSubcategoriesItems($subCategory);
         
         foreach($subCategory->items as $item){
-            $item = ItemServices::getItemDataToDisplay($item);
+            $item = (new ItemServices(new SubCategoryServices))->getItemDataToDisplay($item);
         }
 
-        $categoryName = SubCategoryServices::getParent($subCategory);
+        $categoryName = $subCategory->category->name;
         return $subCategory;
 
     }

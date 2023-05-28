@@ -8,16 +8,22 @@ use App\Services\AdminServices;
 
 class ProfileSetting extends Controller
 {
+    private $admin;
+
+    public function __construct(AdminServices $admin)
+    {
+        $this->admin = $admin;
+    }
 
     public function index()
     {
-        $admin = AdminServices::getAdmin();
+        $admin = $this->admin->getAdmin();
         return view('admin.edit_admin_info',compact('admin'));
     }
 
     public function profileUpdate(AdminValidator $request)
     {
-        return AdminServices::update($request);    
+        return $this->admin->update($request);    
     }
     
    

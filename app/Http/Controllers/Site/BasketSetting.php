@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Site;
 
 use App\Basket\Basket;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Items;
+use App\Models\SupCategory;
 use App\Services\SubCategoryServices;
 use App\Traits\CalculateNewPrice;
 use Illuminate\Http\Request;
@@ -37,9 +39,10 @@ class BasketSetting extends Controller
             $requestItemCount = $this->basket->requestItemCount($item);
 
             if($item->item_number >=  $requestItemCount){
-                $item->namespace = SubCategoryServices::getParent(
-                    SubCategoryServices::getByID($item->subcategory_id,['category_id'])
-                );
+                
+                $item->namespace = Category::select('name')->findorfail(
+                    SupCategory::select('category_id')->findOrFail($item->subcategory_id)->category_id
+                )->name;
 
                 $item->item_count = $requestItemCount;
 

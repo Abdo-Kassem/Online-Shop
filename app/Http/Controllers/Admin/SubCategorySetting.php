@@ -4,27 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCategoryValidator;
+use App\Models\Category;
 use App\Services\CategoryServices;
 use App\Services\SubCategoryServices;
 
 class SubCategorySetting extends Controller
 {   
 
+    private $subCate;
+
+    public function __construct(SubCategoryServices $subCate)
+    {
+        $this->subCate = $subCate;
+    }
+
+
     public function index()
     {
-        $subcategories = SubCategoryServices::all();
+        $subcategories = $this->subCate->all();
         return view('admin.subcategory.subcategories_show',compact('subcategories'));
     }
     
     public function create()
     {
-        $categories = CategoryServices::getAll(['name','id']);
+        $categories = Category::select(['id','name'])->get();
         return view('admin.subcategory.create',compact('categories'));
     }
 
     public function save(SubCategoryValidator $request)
     {
-        if(SubCategoryServices::store($request))
+        if($this->subCate->store($request))
             return redirect()->back()->with('success','done');
         else
             return redirect()->back()->with('fail','sorry try again');
@@ -33,15 +42,15 @@ class SubCategorySetting extends Controller
  
     public function edite($subcategoryID)
     {
-        $subcategory = SubCategoryServices::getByID($subcategoryID);
-        $categories = CategoryServices::getAll(['name','id']);
-        $subcategory->categoryName = SubCategoryServices::getParent($subcategory);
+        $subcategory = $this->subCate->getByID($subcategoryID);
+        $categories = Category::select(['id','name'])->get();;
+        $subcategory->categoryName = $subcategory->category->name;
         return view('admin.subcategory.update',compact('subcategory','categories'));
     }
 
     public function update(SubCategoryValidator $request)
     {
-        if(SubCategoryServices::update($request)){
+        if($this->subCate->update($request)){
             return redirect()->back()->with('success','done');
         }
             return redirect()->back()->with('fail','sorry try again');   
@@ -50,7 +59,7 @@ class SubCategorySetting extends Controller
 
     public function destroy($subcategoryID)
     {
-        if(SubCategoryServices::destroy($subcategoryID))
+        if($this->subCate->destroy($subcategoryID))
             return redirect()->back()->with('success','done');
         else
             return redirect()->back()->with('fail','sorry try again');
@@ -58,11 +67,11 @@ class SubCategorySetting extends Controller
 
     public function getSubcategoryItems($subcategoryID)
     {
-        $subcategory = SubCategoryServices::getByID($subcategoryID);
+        $subcategory = $this->subCate->getByID($subcategoryID);
     
-        $items = SubCategoryServices::getSubcategoriesItems($subcategory);
+        $items = $this->subCate->getSubcategoriesItems($subcategory);
 
-        $namespace = SubCategoryServices::getParent($subcategory);
+        $namespace = $subcategory->category->name;;
 
         $subcategory = ['name'=>$subcategory->name,'namespace'=>$namespace];
 

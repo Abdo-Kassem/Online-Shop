@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Events\SellerRegister;
 use App\Http\Controllers\Site\Seller\CreateShopController;
 use App\Http\Controllers\Site\SellerAuth\RegisterController;
+use App\Services\ShopServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ trait CreateSellerSteps {
 
         if($seller !== null){
 
-            (new CreateShopController())->createShop($seller->id);
+            (new CreateShopController(new ShopServices))->createShop($seller->id);
 
             $this->createWallet($walletData,$seller->id);
 

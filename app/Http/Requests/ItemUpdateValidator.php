@@ -29,7 +29,6 @@ class ItemUpdateValidator extends FormRequest
             'price'=>'required|numeric',
             'details'=>'required',
             'discount'=>'required_with_all:start_time,end_time',
-            'time_start'=>'nullable|after_or_equal:'.now(),
             'time_end'=>'nullable|after:start_time',
         ];
     }

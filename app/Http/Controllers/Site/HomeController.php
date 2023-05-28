@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Basket\Basket;
 use  App\Http\Controllers\Controller;
+use App\interfaces\ServicesContract;
 use App\Services\AdsServices;
 use App\Services\CategoryServices;
 use App\Services\ItemServices;
@@ -13,25 +14,28 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    private $Category,$item;
+
+    public function __construct(CategoryServices $Category,ItemServices $item)
+    {
+        $this->Category = $Category;
+        $this->item = $item;
+    }
+
     public function index()
     {
 
-        $cats = CategoryServices::getCategoriesAndChields();
+        $cats = $this->Category->getCategoriesAndChields();
 
-        $topSelling = $this->getTopSellingItems($cats); //top selling of subcategories
+        $topSelling = $this->Category->getTopSellingItems($cats); //top selling of subcategories
 
-        $categoryTopSelling = $this->getCateTopSellingItems($cats);
+        $categoryTopSelling = $this->Category->getTopSellingItems($cats);
 
-        $topDiscountItems = ItemServices::getHasTopDiscount(6);
+        $topDiscountItems = $this->item->getHasTopDiscount(6);
 
-        $itemsSlider = AdsServices::getItemsSlider(6); 
+        $itemsSlider = (new AdsServices)->getItemsSlider(6); 
        
-        $freeShipping = ItemServices::getFreeShippingNationalWide();//$this->getFreeShippingNationalWide();
+        $freeShipping = $this->item->getFreeShippingNationalWide();//$this->getFreeShippingNationalWide();
 
         $userItemsCount = null;
 
@@ -43,33 +47,8 @@ class HomeController extends Controller
     }
     
     
-    private function getTopSellingItems($cats)
-    {
-        $topSelling = [];
-        if($cats !== null){
-            foreach($cats as $cat){
-                foreach($cat->supCategories as $subCategory){
+    
 
-                    $topSelling[$subCategory->name] = SubCategoryServices::subCatgoryTopSellingItems(
-                        $subCategory->id
-                    );
-                    
-                }
-            } 
-        }
-
-        return $topSelling;
-    }
-
-    private static function getCateTopSellingItems($cats)
-    {
-        $count = $cats->count();
-
-        if($count>0){
-            return CategoryServices::catgoryTopSellingItems($cats[mt_rand(0,$count-1)]->id);
-        }
-
-        return null;
-    }
+    
     
 }

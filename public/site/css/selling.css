@@ -515,24 +515,25 @@ td,th{
 }
 .profile-containner .header h1,.profile-containner .header .seller-data{
     flex:1;
-
 }
 .profile-containner .header .seller-data{
     position: relative;
     text-align: center;
+    display: flex;
+    justify-content: end;
 }
 .seller-data .name{
-    display:inline-block;
-    font-size: 22px;
+    display: inline-block;
+    font-size: 20px;
     color: whitesmoke;
-    padding:3px 8px;
+    padding: 9px 8px;
+    text-transform: capitalize;
+    font-weight: bolder;
 }
 .seller-data .image-arrow{
-    position: absolute;
-    top: -4px;
-    right: 40px;
+    position: relative;
     cursor: pointer;
-    width: 250px;
+    min-width: 95px;
 }
 .seller-data .image-arrow:hover .dropdown-list{
     display: block;
@@ -564,6 +565,8 @@ td,th{
     padding: 10px;
     display: none;
     text-align: start !important;
+    position: absolute;
+    min-width: 200px;
 }
 .seller-data .image-arrow .dropdown-list a{
     display: block;

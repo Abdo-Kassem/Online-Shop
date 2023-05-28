@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserServices {
 
-    public static function getByID($id, ?array $columns = null)
+    public function getByID($id, ?array $columns = null)
     {
         if($columns !== null)
             return User::select($columns)->findorfail($id);
@@ -26,7 +26,7 @@ class UserServices {
         return $orders;
     }
 
-    public static function store($request)
+    public function store($request)
     {
         return User::create([
             'name'=>$request->userName,
@@ -36,7 +36,7 @@ class UserServices {
         ]);
     }
 
-    public static function update($request)
+    public function update($request)
     {
         $user = Auth::user();
         $user->name = $request->userName;
@@ -46,7 +46,7 @@ class UserServices {
         return $user->save();
     }
 
-    public static function destroy($id)
+    public function destroy($id)
     {
         
     }

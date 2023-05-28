@@ -13,7 +13,6 @@ use App\Http\Controllers\AdminAuth\ForgotPasswordController;
 use App\Http\Controllers\AdminAuth\LoginController;
 use App\Http\Controllers\AdminAuth\LogoutController;
 use App\Http\Controllers\AdminAuth\ResetPasswordController;
-use App\Services\AdsServices;
 use Illuminate\Support\Facades\Route;
 
 define('PAGINATION',5);
@@ -84,9 +83,7 @@ route::prefix('admin/setting/')->middleware('auth:admin')->group(function(){
         route::get('delete/ads/{itemID}','delete')->name('delete.ads');
 
     });
-    route::get('tes',function(){
-        return AdsServices::displayCandidate();
-    });
+  
     route::controller(SellerSetting::class)->group(function(){
 
         route::get('admin/get/seller/{type?}','index')->name('get.admin.seller');

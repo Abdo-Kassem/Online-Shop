@@ -97,7 +97,7 @@
     },5000)
     var elemWillActive = document.getElementById('create-product');
     elemWillActive.classList.add('active');
-    elemWillActive.style'.pointerEvents = 'none';
+    elemWillActive.style.pointerEvents = 'none';
     elemWillActive.style.cursor = 'default';
 </script>
 @endsection

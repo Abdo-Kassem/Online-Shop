@@ -6,10 +6,8 @@
     width:100%;
    border-collapse:collapse ;
 }
-tr:nth-child(even){
-    background-color: aquamarine;
-}
-tr:nth-child(odd){
+
+table{
     background-color: rgb(255, 255, 255);
 }
 th:not(.main-header){

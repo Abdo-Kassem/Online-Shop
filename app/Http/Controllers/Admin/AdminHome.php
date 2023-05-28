@@ -3,28 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Services\OrderServices;
 use App\Services\SellerServices;
 
 class AdminHome extends Controller
 {
-    
-    /**
-     * get admin home page data
-     * 
-     */
+    private $order , $seller;
+
+    public function __construct(OrderServices $order,SellerServices $seller)
+    {
+        $this->order = $order;
+        $this->seller = $seller;
+    }
+
     public function index()
     {
         
-        $order = OrderServices::getlastOrder();
+        $order = $this->order->getlastOrder();
 
-        $seller = SellerServices::getLastSeller();
+        $seller = $this->seller->getLastSeller();
 
-        $orderNumber = OrderServices::getOrderNumber();
+        $orderNumber = $this->order->orderCount();
 
-        $sellerNumber = SellerServices::getSellerNumber();
+        $sellerNumber = $this->seller->getSellerNumber();
 
-        $sellerDisabledNumber = SellerServices::getDisabledSellerNumber();
+        $sellerDisabledNumber = $this->seller->getDisabledSellerNumber();
 
         return view('admin.home',compact('order','seller','orderNumber','sellerNumber','sellerDisabledNumber'));
     

@@ -5,22 +5,30 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryValidator;
 use App\Services\CategoryServices;
+use App\Services\SubCategoryServices;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategorySetting extends Controller
 {
-    
+    private $category,$subCate;
+
+    public function __construct(CategoryServices $category,SubCategoryServices $subCate)
+    {
+        $this->category = $category;
+        $this->subCate = $subCate;
+    }
+
     public function index()
     {
-        $categories = CategoryServices::all();
+        $categories = $this->category->all();
         return view('admin.category.categories_show',compact('categories'));
     }
 
 
     public function showSubcategory($categoryID)
     {
-        $subCategories = CategoryServices::getSubCategories($categoryID);
+        $subCategories = $this->subCate->getSubCategoriesByCatID($categoryID);
         return view('admin.category.subcategory_show',compact('subCategories'));
     }
 
@@ -28,13 +36,13 @@ class CategorySetting extends Controller
 
     public function edite($categoryID)
     {
-        $category = CategoryServices::getByID($categoryID);
+        $category = $this->category->getByID($categoryID);
         return view('admin.category.edite',compact('category'));
     }
 
     public function update(Request $request)
     {
-        $res = CategoryServices::update($request);
+        $res = $this->category->update($request);
         
         if($res){
             return redirect()->route('get.admin.categories')->with('success','done');
@@ -54,13 +62,13 @@ class CategorySetting extends Controller
 
     public function save(Request $request)
     {
-        $res = CategoryServices::store($request);
+        $res = $this->category->store($request);
         return $this->redirectTo($res);
     }
 
     public function destroy($categoryID)
     {
-        $status = CategoryServices::destroy($categoryID);
+        $status = $this->category->destroy($categoryID);
         return $this->redirectTo($status);
     }
     

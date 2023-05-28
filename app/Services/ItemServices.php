@@ -3,9 +3,12 @@
 namespace App\Services;
 
 use App\Exceptions\FileNotFound;
-use App\interfaces\StaticServicesContract;
+use App\interfaces\ServicesContract;
+use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Items;
+use App\Models\Shop;
+use App\Models\SupCategory;
 use App\Traits\CalculateNewPrice;
 use App\Traits\RemoveImage;
 use App\Traits\SaveImage;
@@ -13,30 +16,35 @@ use App\Traits\TopPicks;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class ItemServices implements StaticServicesContract{
+class ItemServices implements ServicesContract{
 
     use SaveImage;
     use RemoveImage;
     use CalculateNewPrice;
     use TopPicks;
 
-    public static function all()
+    private  $subCategory;
+
+    public function __construct(SubCategoryServices $subCategory)
+    {
+        $this->subCategory = $subCategory;
+    }
+
+    public  function all()
     {
         $items = Items::paginate(PAGINATION);
 
         foreach($items as $item){
 
-            $item->subcategoryName = ItemServices::getSubCategory($item,['name'])->name;
+            $item->subcategoryName = $this->getSubCategory($item,['name'])->name;
 
-            $item->namespace = SubCategoryServices::getParent(
-                SubCategoryServices::getByID($item->subcategory_id)
-            );
+            $this->getNamespace($item);
 
         }
         return $items;
     }
 
-    public static function getHasTopDiscount($itemNumber = null)//discount
+    public function getHasTopDiscount($itemNumber = null)//discount
     {
         if($itemNumber !== null)
             $topDeals = Discount::with('item')->select('discount_value','item_id')->
@@ -46,18 +54,19 @@ class ItemServices implements StaticServicesContract{
                         orderBy('discount_value','desc')->get()->all();
 
         foreach($topDeals as $topDeal){
+           
+            $topDeal->item->categoryName =
+            SupCategory::select('id','name','category_id')->findorfail($topDeal->item->subcategory_id)->category->name;
 
-            $topDeal->item->categoryName = SubCategoryServices::getParent(
-                SubCategoryServices::getByID($topDeal->item->subcategory_id)
-            );
-
-            $topDeal->item->newPrice = static::calcNewPrice($topDeal->discount_value,$topDeal->item->price);
+            $topDeal->item->newPrice = $this->calcNewPrice($topDeal->discount_value,$topDeal->item->price);
         
         }
+
         return $topDeals;
+
     }
 
-    public static function getHasTopDiscountBy($subCateID):Array
+    public  function getHasTopDiscountBy($subCateID):Array
     {
 
         $topDeals = Items::with(['discount'=>function($q){
@@ -66,40 +75,34 @@ class ItemServices implements StaticServicesContract{
 
         foreach($topDeals as $topDeal){
 
-            $topDeal->newPrice = static::calcNewPrice($topDeal->discount->discount_value,$topDeal->price);
+            $topDeal->newPrice = $this->calcNewPrice($topDeal->discount->discount_value,$topDeal->price);
         
         }
+        
         return $topDeals->all();
     }
 
-    public static function getFreeShippingNationalWide()
+    public  function getFreeShippingNationalWide()
     {
         $items = Items::where('free_shipping',1)->paginate(6);
 
         foreach($items as $item){
 
             if($item->discount != null){
-                $item->newPrice = static::calcNewPrice($item->discount->discount_value,$item->price);
+                $item->newPrice = $this->calcNewPrice($item->discount->discount_value,$item->price);
             }
 
-            $item->namespace = SubCategoryServices::getParent(
-                SubCategoryServices::getByID($item->subcategory_id,['category_id'])
-            );
+            $this->getNamespace($item);
 
         }
 
         return $items;
     }
 
-    public static function itemExist($id)
-    {
-        return Items::where('id',$id)->exists();
-    }
-
     /**
      * $data refer if you want discount and other data of item
      */
-    public static function getByID($id, ?array $columns = null,$data = false)
+    public  function getByID($id, array $columns = null,$data = false)
     {
         if($columns !== null){
             $item = Items::select($columns)->findorfail($id);   
@@ -111,9 +114,7 @@ class ItemServices implements StaticServicesContract{
 
             $item->discount;
 
-            $item->namespace = SubCategoryServices::getParent(
-                SubCategoryServices::getByID($item->subcategory_id)
-            );
+            $this->getNamespace($item);
 
             return $item;
         }
@@ -125,7 +126,7 @@ class ItemServices implements StaticServicesContract{
      * item can be itemID or item object
      * get item discount,namespace,newprice
      */
-    public static function getItemDataToDisplay($item)
+    public  function getItemDataToDisplay($item)
     {
         if(is_numeric($item)){
             $item = Items::findorfail($item);
@@ -133,24 +134,22 @@ class ItemServices implements StaticServicesContract{
 
         $item->discount = $item->discount()->select(['item_id','discount_value'])->first();
     
-        $item->namespace = SubCategoryServices::getParent(
-            SubCategoryServices::getByID($item->subcategory_id)
-        );
+        $this->getNamespace($item);
     
         if($item->discount !== null)
-            $item->newPrice = static::calcNewPrice($item->discount->discount_value,$item->price);
+            $item->newPrice = $this->calcNewPrice($item->discount->discount_value,$item->price);
 
         return $item;
     }
 
-    public static function getSubCategory(Items $item,array $columns = null)/////***** */
+    public function getSubCategory(Items $item,array $columns = null)/////***** */
     {
         if($columns !== null)
             return $item->supCategory()->select($columns)->first();
         return $item->supCategory;
     }
 
-    public static function getItemsOfEachSeller($items)
+    public  function getItemsOfEachSeller($items)
     {
         $itemsOfEachSeller = [];
 
@@ -164,7 +163,7 @@ class ItemServices implements StaticServicesContract{
             
             if($item->discount!=null)
                 ////store items price in array
-                $itemsOfEachSeller[$item->seller_id]['price'][] =$item_count * static::calcNewPrice($item->discount->discount_value,$item->price);
+                $itemsOfEachSeller[$item->seller_id]['price'][] =$item_count * $this->calcNewPrice($item->discount->discount_value,$item->price);
             else{
                 //store items price in array
                 $itemsOfEachSeller[$item->seller_id]['price'][] =$item_count * $item->price;
@@ -178,7 +177,7 @@ class ItemServices implements StaticServicesContract{
      * getItemData refer to if you want namespace and discount and subcategoryName of item by default false
      * use paginate
      */
-    public static function allItemsWhere($column,$operator,$value,$getItemData=false)
+    public  function allItemsWhere($column,$operator,$value,$getItemData=false)
     {
         $items = Items::where($column,$operator,$value)->paginate(PAGINATION);
 
@@ -186,12 +185,10 @@ class ItemServices implements StaticServicesContract{
 
             foreach($items as $item){
 
-                $item->namespace = SubCategoryServices::getParent(
-                    SubCategoryServices::getByID($item->subcategory_id,['id','category_id'])
-                );
+                $this->getNamespace($item);
 
                 $item->discount;
-                $item->subcategoryName = SubCategoryServices::getByID($item->subcategory_id,['name'])->name;
+                $item->subcategoryName = $this->subCategory->getByID($item->subcategory_id,['name'])->name;
             }
             
         }
@@ -202,9 +199,9 @@ class ItemServices implements StaticServicesContract{
     /**
      * if done return item count else return 0
      */
-    public static function plusOne($itemID) :int
+    public  function plusOne($itemID) :int
     {
-        $item = ItemServices::getByID($itemID,['id','item_number']);
+        $item = $this->getByID($itemID,['id','item_number']);
         $item->item_number ++;
 
         if($item->save())
@@ -212,38 +209,52 @@ class ItemServices implements StaticServicesContract{
         return 0;
     }
 
-    public static function minusOne($itemID) :int
+    public  function minusOne($itemID) :int
     {
-        $item = ItemServices::getByID($itemID,['id','item_number']);
-        $item->item_number --;
+        $item = $this->getByID($itemID,['id','item_number']);
+        
+        if($item->item_number > 0)
+            $item->item_number --;
+        else
+            return 0;
 
         if($item->save())
             return $item->item_number;
-        return 0; 
-    }
-    
-    public static function getItemDiscount(Items $item)
-    {
-        return $item->discount;
+        return false; 
     }
 
-    public static function countWhere($column,$operator,$value)
-    {
-        return Items::where($column,$operator,$value)->count();
+
+    /**
+     * get shops of seller and catgory and subcategory of this shops and return associative array
+     */
+    public  function create($sellerID)
+    {   
+        $shops = Shop::select(['category_id','name'])->where('sellerID',$sellerID)->get();
+
+        $shopAndcategoryAndSubcategories = [];
+        
+        foreach($shops as $shop){
+
+            $shopAndcategoryAndSubcategories[$shop->name] = Category::findorfail($shop->category_id);
+           
+        }
+
+        return $shopAndcategoryAndSubcategories;
     }
+
 
     /**
      * $existShipping mean explain if item create by seller or admin if seller will bass false 
      * because seller can not specify shipping state
      */
-    public static function store($request , string $sellerID = '',$existShipping = true)
+    public  function store($request , string $sellerID = '',$existShipping = true)
     {
         //$request->subcategory contain category id and subategory id like this 1 3 in string
         $subcategory_category_ids = explode(' ',$request->subcategory);
         
-        $categoryName = CategoryServices::getByID($subcategory_category_ids[0],['name'])->name;
+        $categoryName = Category::select('name')->findorfail($subcategory_category_ids[0])->name;
 
-        $imageName = self::saveImage($request->image,'site/images/categories/'.$categoryName);   
+        $imageName = $this->saveImage($request->image,'site/images/categories/'.$categoryName);   
         
         $data = $request->except(['_token','subcategory','image']);
         $data['subcategory'] = $subcategory_category_ids[1];
@@ -290,41 +301,20 @@ class ItemServices implements StaticServicesContract{
     /**
      * get item and discount,namespace and subcategory name
      */
-    public static function edite($itemID)
+    public  function edite($itemID)
     {
-        $product = ItemServices::getByID($itemID,null,true);
-
-        $product->subcategoryName = SubCategoryServices::getParent(
-            SubCategoryServices::getByID($product->subcategory_id),['id','category_id']
-        );
+        $product = $this->getByID($itemID,null,true);
 
         return $product;
     }
 
-    /**
-     * get shops of seller and catgory and subcategory of this shops and return associative array
-     */
-    public static function create($sellerID)
-    {   
-        $shops = ShopServices::getBySellerID($sellerID,['category_id','name']);
-
-        $shopAndcategoryAndSubcategories = [];
-        
-        foreach($shops as $shop){
-            $shopAndcategoryAndSubcategories[$shop->name] = CategoryServices::getCategoryAndsubCates(
-                'id','=',$shop->category_id
-            );
-        }
-
-        return $shopAndcategoryAndSubcategories;
-    }
-
-    public static function update($request)
+    
+    public  function update($request)
     {
         try{
-            $imageName = static::saveImage($request->image,'site/images/categories/'.$request->categoryName.'/');
+            $imageName = $this->saveImage($request->image,'site/images/categories/'.$request->categoryName.'/');
         
-            $item = ItemServices::getByID($request->itemID);
+            $item = $this->getByID($request->itemID);
 
             $oldImageName = $item->image;
             
@@ -353,35 +343,49 @@ class ItemServices implements StaticServicesContract{
             }
 
             DB::commit();
+
+            $this->getNamespace($item);
     
             $path = 'C:/xampp/htdocs/onlinShop/public/site/images/categories/';
-            $status = self::RemoveImage(
-                $path.SubCategoryServices::getParent(SubCategoryServices::getByID($item->subcategory_id)).'/'.$oldImageName
+            $status = $this->RemoveImage(
+                $path.$item->namespace.'/'.$oldImageName
             );
 
         }catch(Exception $obj){
+            throw $obj;
             return $obj->getMessage();
         }
         
         return true;
     }
 
-    public static function destroy($id)
+    public  function destroy($id)
     {
 
-        $item = ItemServices::getByID($id);
+        $item = $this->getByID($id);
+        $this->getNamespace($item);
+
         $path = 'C:/xampp/htdocs/onlinShop/public/site/images/categories/';
 
         try{
-            self::RemoveImage(
-                $path.SubCategoryServices::getParent(SubCategoryServices::getByID($item->subcategory_id)).'/'.$item->image
+
+            $this->RemoveImage(
+                $path.$item->namespace.'/'.$item->image
             );
+
         }catch(FileNotFound $obj){
             return $obj->getMessage();
         }
 
         return $item->delete();
         
+    }
+
+    private function getNamespace(&$item)
+    {
+        $item->namespace = Category::select(['name'])->findorfail(
+            SupCategory::select('category_id')->findorfail($item->subcategory_id)->category_id
+        )->name;
     }
 
 }

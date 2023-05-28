@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name',50);
             $table->integer('category_id',false,true);
-            $table->string('image',100);
+            $table->string('image');
             $table->foreign('category_id','catgory_subcategory_key')->references('id')->
                     on('categories')->cascadeOnDelete()->cascadeOnUpdate();
         });

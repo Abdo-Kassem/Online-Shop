@@ -16,6 +16,8 @@ class SellerProfileSetting extends Controller
 
     private $seller ;
     private $phoneService ;
+    private $sellerService;
+    private $shopService;
 
     public function __construct()
     {
@@ -25,12 +27,14 @@ class SellerProfileSetting extends Controller
         });
 
         $this->phoneService = new PhoneServices();
+        $this->sellerService = new SellerServices;
+        $this->shopService = new ShopServices;
     }
 
     
    public function index()
    {
-        SellerServices::getProfileData($this->seller);
+        $this->sellerService->getProfileData($this->seller);
         return view('site.selling.seller_profile.profile_home')->with('seller',$this->seller);
 
    }
@@ -42,7 +46,7 @@ class SellerProfileSetting extends Controller
 
    public function updateProfileInfo(SellerProfileUpdateValidator $request)
    {
-        $status = SellerServices::update($request);
+        $status = $this->sellerService->update($request);
 
         if($status === true)
             return redirect()->route('seller.profile');
@@ -77,7 +81,7 @@ class SellerProfileSetting extends Controller
 
     public function deleteShop($shopID)
     {
-        $status = ShopServices::destroy($shopID,$this->seller->id);
+        $status = $this->shopService->destroy($shopID,$this->seller->id);
 
         if($status === false)
             return redirect()->back()->with('fail','must has at least on shop');
@@ -93,7 +97,7 @@ class SellerProfileSetting extends Controller
 
         $shop = null; //will fill when send to getEditeData because send by reference
 
-        $catgories = ShopServices::getEditeData($this->seller->id,$shopID,$shop);
+        $catgories = $this->shopService->getEditeData($this->seller->id,$shopID,$shop);
         
         $city = ['Cairo','Alexandria','Giza','bur saeid','Suez','The Red Sea','elbehera',
             'El Mansoura','Tanta','Asyut','Fayoum','Zagazig','Ismailia','Aswan','Damanhur',
@@ -108,7 +112,7 @@ class SellerProfileSetting extends Controller
     public function updateShop(Request $request,$shopID)
     {
 
-        if(ShopServices::update($request,$shopID,$this->seller->id))
+        if($this->shopService->update($request,$shopID,$this->seller->id))
             return redirect()->route('seller.profile');
         return redirect()->back()->with('fail','edit fail try again');
     }

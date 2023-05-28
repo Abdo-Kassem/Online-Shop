@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Items;
 use App\Models\Order_Items_pivot;
+use App\Models\SupCategory;
 use App\Services\CategoryServices;
 use App\Services\SubCategoryServices;
 use PhpParser\Builder\Trait_;
@@ -11,7 +12,9 @@ use PhpParser\Builder\Trait_;
 Trait TopPicks 
 {
 
-    public static function getTopPicksItems($subCategory_id)
+    use CalculateNewPrice;
+
+    public  function getTopPicksItems($subCategory_id)
     {//will return topPicks five items
        
         $topPicksItemsNum = 0; //will stop foreach that grt top picks item when number of items is 5
@@ -37,9 +40,9 @@ Trait TopPicks
             if($item && $topPicksItemsNum<5){
                 $item->discount = $item->discount()->select(['item_id','discount_value'])->first();
                 if($item->discount !=null){
-                    $item->newPrice = static::calcNewPrice($item->discount->discount_value,$item->price);
+                    $item->newPrice = $this->calcNewPrice($item->discount->discount_value,$item->price);
                 }
-                $item->namespace = SubCategoryServices::getParent(SubCategoryServices::getByID($subCategory_id,['id','category_id']));
+                $item->namespace = SupCategory::select(['id','category_id'])->findorfail($subCategory_id)->category->name;
                 $topPicksItems[] = $item;
                 $topPicksItemsNum += 1;
             }

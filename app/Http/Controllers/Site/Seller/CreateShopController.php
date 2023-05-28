@@ -5,21 +5,18 @@ namespace App\Http\Controllers\Site\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ShopValidator;
+use App\Models\Category;
 use App\Services\CategoryServices;
 use App\Services\ShopServices;
 
 class CreateShopController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Create Shop Controller used only when create seller at the first time
-    |--------------------------------------------------------------------------
-    |
-    */
+    
+    private $shop;
 
-    public function __construct()
+    public function __construct(ShopServices $shop)
     {
-        
+        $this->shop = $shop;
     }
 
     /**
@@ -38,17 +35,19 @@ class CreateShopController extends Controller
      */
     public function createShop($sellerID,array $columns = [])
     {
-        return ShopServices::store($sellerID,$columns);
+        return $this->shop->store($sellerID,$columns);
     }
 
     public function create()
     {
-        $catgories = CategoryServices::getAll(['name','id']);
+        $catgories = Category::select((['name','id']))->get();(['name','id']);
+
         $city = ['Cairo','Alexandria','Giza','bur saeid','Suez','The Red Sea','elbehera',
             'El Mansoura','Tanta','Asyut','Fayoum','Zagazig','Ismailia','Aswan','Damanhur',
             'El-Minya','Damietta','Luxor','Qena','Beni Suef','Sohag','Hurghada','outh of Sinaa',
             'Dakahlia','el-sharqia'
         ];
+        
         return view('site.auth.seller_auth.create_shop',compact('catgories','city')); 
     }
 

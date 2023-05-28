@@ -10,7 +10,7 @@
     <div class="content">
         @if(count($subCategories)>0)
             @foreach($subCategories as $subCategory)
-                <a href="{{route('category.subCategory',$subCategory->name)}}"
+                <a href="{{route('category.subCategory',$subCategory->id)}}"
                  class='content-subCategory' title="{{$subCategory->name}}">
                  <img class='sup-category-image'src="{{URL::asset('site/images/subcategories_image/'.$subCategory->image)}}">
                 

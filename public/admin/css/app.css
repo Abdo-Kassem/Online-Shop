@@ -106,9 +106,10 @@ body{
     display:none;
     background-color: white;
 }
+.data .links li a{
+  display: block;
+}
 .data .links li a,.category-reffrence{
-    display: inline-block;
-    width:100%;
     text-decoration: none;
     padding: 5px 10px;
     color:#6a6a6a;

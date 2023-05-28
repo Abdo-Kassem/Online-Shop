@@ -20,7 +20,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name',50);
             $table->string('address',200);
-            $table->integer('post_number')->unique()->nullable(false);
+            $table->integer('post_number')->nullable(false);
             $table->integer('category_id')->unsigned();
             $table->string('city',50);
             $table->string('sended_person_email',150);

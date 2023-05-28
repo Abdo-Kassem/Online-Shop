@@ -12,16 +12,19 @@ class Order extends Controller
 {
     use CalculateNewPrice;
 
-    public function __construct()
+    private $order;
+
+    public function __construct(OrderServices $order)
     {
-        return $this->middleware('auth');
+        $this->middleware('auth:web');
+        $this->order = $order;
     }
 
     public function index()
     {
         $user = Auth::user();
         $userItemsCount = Basket::counts($user);
-        $orders = OrderServices::getOrdersBy($user);
+        $orders = $this->order->getOrdersBy($user);
         return view('site.showOrders',compact('orders','userItemsCount'));
     }
     
@@ -29,7 +32,7 @@ class Order extends Controller
 
         $user = Auth::user();
 
-        if(OrderServices::store($user)){
+        if($this->order->store($user)){
             return redirect()->back()->with('success','2 orders created ');
         }
         return redirect()->back()->with('fail','fail try again');
@@ -37,7 +40,7 @@ class Order extends Controller
 
     public function cancel($orderID)
     {
-        if(OrderServices::destroy($orderID))
+        if($this->order->destroy($orderID))
             return redirect()->back()->with('success','done');
         return redirect()->back()->with('fail','deletion fail try again');
     }

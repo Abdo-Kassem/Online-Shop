@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Site\Seller;
 
 use App\Http\Controllers\Controller;
-use App\Services\FeedbackServices;
-use App\Services\ItemServices;
-use App\Services\OrderServices;
+use App\Services\HomeSellerService;
 use App\Services\SellerServices;
 use Illuminate\Support\Facades\Auth;
 
 class SellerHome extends Controller
 {
 
-    private $sellerID ;
+    private $sellerID ,$sellerHome;
 
-    public function __construct()
+    public function __construct(HomeSellerService $sellerHome)
     {
+        $this->sellerHome = $sellerHome;
+
         $this->middleware(function ($request, $next) {
             $this->sellerID = Auth::guard('seller')->id();
             return $next($request);
@@ -24,17 +24,17 @@ class SellerHome extends Controller
 
     public function index()
     {
-        $totalPrice = SellerServices::getSalesSum($this->sellerID);
+        $totalPrice = $this->sellerHome->getSalesSum($this->sellerID);
 
-        $orderCount = OrderServices::getOrderNumber($this->sellerID);
+        $orderCount = $this->sellerHome->getOrderNumber($this->sellerID);
 
-        $productsCount = ItemServices::countWhere('seller_id','=',$this->sellerID);
+        $productsCount = $this->sellerHome->itemCount($this->sellerID);
         
-        $customerCount = SellerServices::countCustomers(SellerServices::getByID($this->sellerID,['id']));
+        $customerCount = $this->sellerHome->countCustomers((new SellerServices)->getByID($this->sellerID,['id']));
 
-        $lastTwoOrder = OrderServices::getLastTwoOrder($this->sellerID);
+        $lastTwoOrder = $this->sellerHome->getLastTwoOrder($this->sellerID);
 
-        $lastFeedback = FeedbackServices::getLastFeedback($this->sellerID);
+        $lastFeedback = $this->sellerHome->getLastFeedback($this->sellerID);
 
         return view('site.selling.home',compact('totalPrice','orderCount','productsCount',
             'customerCount','lastTwoOrder','lastFeedback',))->with('sellerID',$this->sellerID);

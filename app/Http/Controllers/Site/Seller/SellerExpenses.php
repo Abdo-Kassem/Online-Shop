@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Site\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Shop;
 use App\Services\CategoryServices;
 use App\Services\ShopServices;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +15,12 @@ class SellerExpenses extends Controller
     {
         $sellerID = Auth::guard('seller')->id();
         
-        $categories = ShopServices::getBySellerID($sellerID,['category_id']); //return categories id
+        $shops = Shop::select(['category_id'])->where('sellerID',$sellerID)->get(); //return categories id
         
         $categoriesDate = [];
 
-        foreach($categories as $category){
-            $categoriesDate[] = CategoryServices::getByID($category->category_id);
+        foreach($shops as $shop){
+            $categoriesDate[] = Category::findorfail($shop->category_id);
         }
         
         return view('site.selling.selling_expenses',compact('categoriesDate'));

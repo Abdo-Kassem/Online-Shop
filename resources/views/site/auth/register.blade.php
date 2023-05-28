@@ -28,7 +28,7 @@
                     <small>{{$message}}</small>
                 @enderror
                 <input type="text" name="address" placeholder="like assiut,manfalut 25 naser street"
-                        value="{{$user->address}}"> 
+                       > 
                 @error('address')
                     <small>{{$message}}</small>
                 @enderror

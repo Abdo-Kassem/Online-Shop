@@ -3,15 +3,14 @@
 @section('content')
 <div class="category-content">
     <div class="categories">
-        @if(! is_null($cats))
-            <?php $categoryCount = count($cats);?>
-            @for($count=0 ; $count < $categoryCount; $count++)
-            <a href="{{route('get.category',$cats[$count]->id)}}" class="superMarket">
+       
+        @foreach($cats as $cat)
+            <a href="{{route('get.category',$cat->id)}}" class="superMarket">
                 <i class="fas fa-apple-alt"></i>
-                <span>{{$cats[$count]->name}}</span>
+                <span>{{$cat->name}}</span>
             </a>
-            @endfor
-        @endif
+        @endforeach
+      
     </div>
     <div class="center-ads">
         <div class="slider">
@@ -41,13 +40,15 @@
         </div>
     </div>
     <div class="right-content">
-        @if(! is_null($cats) && ! is_null($cats[0]->supCategories))
+        @if( $cats->count() > 0) 
+            @if(! is_null($cats[0]->supCategories))
             <?php $subCount = $cats[0]->supCategories->count();?> 
             @for($count=0;$count<$subCount&&$count<=1;$count++)
             <a href="{{route('category.subCategory',$cats[0]->supCategories[$count]->id)}}" class="top-image">
                 <img src="{{URL::asset('site/images/subcategories_image/'.$cats[0]->supCategories[$count]->image)}}">
             </a>
             @endfor
+            @endif
         @endif
     </div >
 </div>
@@ -90,7 +91,7 @@
        @endforeach
     </div>
 </section>
-<!--
+{{--
 <section class="flash-sales">
     <div class="header">
         <h4 style="display:inline-block">
@@ -131,7 +132,7 @@
         
     </div>
 </section>
--->
+--}}
 @if(isset($freeShipping) && count($freeShipping)>0)
 <section class="free-shiping-national">
     <div class="header">

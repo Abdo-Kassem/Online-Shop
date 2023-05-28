@@ -25,7 +25,7 @@ class RegisterValidator extends FormRequest
     {
         return [
             'email'=>'required|email|unique:users,email',
-            'userName'=>'required|alpha|unique:users,name|max:11|min:4',
+            'userName'=>'required|alpha_dash|unique:users,name|max:11|min:4',
             'password'=>'required|min:8|max:20|confirmed|required_with:password_confirmation',
             'address'=>'required|regex:/^([A-Za-z]{4,11})(\,[A-Za-z]+)*(\s[0-9]+)*(\s[A-Za-z]+)+$/',
         ];

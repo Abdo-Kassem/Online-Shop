@@ -8,22 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderSetting extends Controller
 {
-    private $sellerID ;
+    private $sellerID , $order;
 
-    public function __construct()
+    public function __construct(OrderServices $order)
     {
         $this->middleware(function ($request, $next) {
             $this->sellerID = Auth::guard('seller')->id();
             return $next($request);
         });
+
+        $this->order = $order;
     }
 
     public function showOrders()
     {
-        $orders = OrderServices::getWhere('sellerID','=',$this->sellerID);
+        $orders = $this->order->getWhere('sellerID','=',$this->sellerID);
 
         foreach($orders as $order){
-            $order->userName = OrderServices::getUserName($order);
+            $order->userName = $this->order->getUserName($order);
         }
     
         return view('site.selling.order.show_orders',compact('orders'));
@@ -31,7 +33,7 @@ class OrderSetting extends Controller
 
     public function itemOfOrder($orderID)
     {
-        $items = OrderServices::getItemsOfOrder($orderID,true);
+        $items = $this->order->getItemsOfOrder($orderID,true);
         $items->orderID = $orderID;
         return view('site.selling.order.show_items_of_order',compact('items'));
     }

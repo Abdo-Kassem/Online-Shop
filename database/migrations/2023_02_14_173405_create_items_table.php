@@ -19,7 +19,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name',50);
             $table->text('details');
-            $table->string('image',100);
+            $table->string('image');
             $table->decimal('price')->unsigned();
             $table->mediumInteger('item_number')->comment('stor number of item exist')->default(1);
             $table->string('seller_id',15);
